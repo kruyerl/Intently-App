@@ -26,7 +26,7 @@ export const addTaskAction = (state, { value, dispatch }) => {
 }
 
 export const updateTaskAction = (state, { value, dispatch }) => {
-    const { db } = state
+    const { db, ui } = state
     const newTasks = []
     db.tasks.forEach(task => {
         if (task.uid === value.uid) {
@@ -35,20 +35,22 @@ export const updateTaskAction = (state, { value, dispatch }) => {
         return newTasks.push(task)
     })
     db.tasks = newTasks
+    ui.syncPending = true
     return {
         ...state,
         db,
-        syncPending: true,
+        ui,
     }
 }
 
 export const deleteTaskAction = (state, { value }) => {
-    const { db } = state
+    const { db, ui } = state
     const updates = db.tasks.filter(task => task.uid !== value.uid)
     db.tasks = updates
+    ui.syncPending = true
     return {
         ...state,
         db,
-        syncPending: true,
+        ui,
     }
 }

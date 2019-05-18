@@ -80,14 +80,14 @@ const appReducer = (state, { type, payload }) => {
             registerUserAction(payload)
             return state
         case SET_USER:
-            return setUserAction(payload, state)
+            return setUserAction(state, payload)
         case CHECK_AUTH:
-            return checkUserAuthAction(payload, state)
+            return checkUserAuthAction(state, payload)
 
         //  ?DATA
 
         case LOAD_USERDATA:
-            loadUserDataAction(payload)
+            loadUserDataAction(state, payload)
             return state
         case SYNC_DATA:
             return syncDataAction(state, payload)

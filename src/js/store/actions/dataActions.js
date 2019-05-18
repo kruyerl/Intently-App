@@ -2,15 +2,33 @@
 import firebase from '../firebase'
 import { CLEAR_LOADING, SET_ERROR, SYNC_DATA } from '../types'
 
-export async function loadUserDataAction({ dispatch }) {
+export async function loadUserDataAction(state,{ dispatch }) {
     const dbData = await firebase.getUserDoc()
-    dispatch({ type: SYNC_DATA, payload: dbData })
-    return dbData
+    console.log('dbdata',dbData)
+    const { db, creationTime, displayName, email, lastSignInTime, uid } = dbData
+    const {ui} = state
+    ui.downloadPending= false
+    ui.authenticated= true
+    const user = {
+        creationTime,
+        displayName,
+        email,
+        lastSignInTime,
+        uid,
+    }
+
+    const newState = {
+        ...state,
+        user,
+        db,
+        ui
+    }
+    dispatch({ type: SYNC_DATA, payload: newState })
 }
 
 export async function postUserDataAction(state) {
     const { createdAt, creationTime, displayName, email, lastSignInTime, uid } = state.user
-    const { db } = state
+    const { db, ui } = state
     const dbstate = {
         db,
         creationTime,
@@ -20,26 +38,14 @@ export async function postUserDataAction(state) {
         uid,
     }
     firebase.postUserDoc(dbstate)
+    ui.syncPending = false
     return {
         ...state,
-        syncPending: false,
+        ui,
     }
 }
 
-export function syncDataAction(state, data) {
-    const { db, creationTime, displayName, email, lastSignInTime, uid } = data
-    const user = {
-        creationTime,
-        displayName,
-        email,
-        lastSignInTime,
-        uid,
-    }
+export function syncDataAction(state, payload) {
 
-    return {
-        ...state,
-        user,
-        db,
-        downloadPending: false,
-    }
+    return payload
 }

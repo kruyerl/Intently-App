@@ -33,6 +33,7 @@ const StyledImgContainer = styled.div`
 const StyledImg = styled.img`
     max-width: 400px;
     margin: 0 auto;
+    width: 100%;
 `
 const FooterCTA = ({ children, h4 }) => (
     <Container>

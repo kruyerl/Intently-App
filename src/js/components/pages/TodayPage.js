@@ -23,55 +23,9 @@ const StyledButtonContainer = styled.div`
 const TodayPage = () => {
     const { state, dispatch } = useContext(AppContext)
 
-    const [localState, setLocalState] = useState({ name: 'bill' })
-
-    useEffect(() => {
-        if (state.user) return setLocalState({ name: state.user.displayName })
-    }, [state])
-
-    useEffect(() => {
-        dispatch({
-            type: LOAD_USERDATA,
-            payload: {
-                dispatch,
-            },
-        })
-        return () => {
-            // TODO post data
-            // dispatch({
-            //     type: POST_DATA,
-            //     payload: {
-            //         dispatch,
-            //     },
-            // })
-        }
-    }, [])
-    const handleChange = e => {
-        setLocalState({
-            name: e.target.value,
-        })
-    }
-    const handleClick = e => {
-        e.preventDefault()
-        dispatch({
-            type: SET_NAME,
-            payload: {
-                name: localState.name,
-            },
-        })
-    }
-
-    const getFirstName = fullname => {
-        const name = fullname.split(' ')[0]
-        console.log(name)
-        name.charAt(0).toUpperCase()
-        console.log(name)
-        return name
-    }
-
-    return state.authenticated && state.user.displayName !== undefined ? (
+    return state && (state.ui.authenticated === true) ? (
         <>
-            <HeroHeader capitalize h1={`Welcome ${state.user.displayName}`}>
+            <HeroHeader capitalize h1={`Welcome NAME`}>
                 <Text tag="h3" mod="black">
                     Todays main focus:
                 </Text>
@@ -96,8 +50,6 @@ const TodayPage = () => {
                 </StyledButtonContainer>
             </FooterCTA>
         </>
-    ) : (
-        <h1>loading</h1>
-    )
+    ) : <div><br /><br /><br /><h1>Loading</h1></div>
 }
 export default TodayPage

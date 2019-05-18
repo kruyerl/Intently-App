@@ -8,37 +8,19 @@ import { UPDATE_TASK, DELETE_TASK } from '../../store/types'
 
 const Container = styled.section`
     padding: 8px;
-    border: 0px solid grey;
+    background: ${props => rgba(props.theme.colors.brand.base, 0)};
+    border-top: 1px solid ${props => rgba(props.theme.colors.layout.grey, 0.5)};
+    border-bottom: 1px solid ${props => rgba(props.theme.colors.layout.grey, 0.5)};
+
     display: flex;
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-
-    li {
-        a {
-            color: ${props => rgba(props.theme.colors.layout.black, 0.0)};
-            margin-left: 12px;
-            transition: all 300ms cubic-bezier(0.66, 0.01, 0.43, 1.01);
-            &:hover {
-                color: ${props => rgba(props.theme.colors.layout.black, 0.0)};
-            }
-        }
-    }
     &:hover {
-        background-color: ${props => rgba(props.theme.colors.layout.black, 0.05)};
-        transition: background-color 1000ms ease;
-
-        li {
-            a {
-                color: ${props => rgba(props.theme.colors.layout.black, 0.5)};
-                margin-left: 12px;
-                transition: all 300ms cubic-bezier(0.66, 0.01, 0.43, 1.01);
-                &:hover {
-                    color: ${props => rgba(props.theme.colors.interactive.base, 0.9)};
-                    cursor: pointer;
-                }
-            }
-        }
+        transition: all 300ms cubic-bezier(0.66, 0.01, 0.43, 1.01);
+        background: ${props => rgba(props.theme.colors.brand.base, 0.02)};
+        border-top: 1px solid ${props => rgba(props.theme.colors.layout.grey, 1)};
+        border-bottom: 1px solid ${props => rgba(props.theme.colors.layout.grey, 1)};
     }
 `
 const Task = styled.div`
@@ -47,6 +29,7 @@ const Task = styled.div`
     width: 100%;
     cursor: pointer;
 `
+
 const Tools = styled.ul`
     display: flex;
     align-items: center;
@@ -55,13 +38,30 @@ const Tools = styled.ul`
     margin: 0px;
     padding: 0px;
 `
+const Tool = styled.a`
+    font-size: 24px !important;
+    color: ${props => rgba(props.theme.colors.layout.black, 0.5)};
+    margin-left: 12px;
+
+    transition: all 300ms cubic-bezier(0.66, 0.01, 0.43, 1.01);
+    &:hover {
+        color: ${props => rgba(props.theme.colors.interactive.base, 0.9)};
+        cursor: pointer;
+    }
+    opacity: 0.2;
+    ${Container}:hover & {
+        opacity: 1;
+    }
+`
 const Checkbox = styled.div`
     margin: 0px;
-    width: 20px;
-    height: 20px;
+    padding: 8px;
+    width: 24px;
+    height: 24px;
+
     background: ${props => props.theme.colors.layout.grey};
     border: 1px solid grey;
-    border-radius: 10px;
+    border-radius: 12px;
     transition: all 300ms cubic-bezier(0.66, 0.01, 0.43, 1.01);
     ${props => props.theme.shadows.z1};
     &:hover {
@@ -135,10 +135,10 @@ const Action = ({ checked, body, index, edit }) => {
             {edit && (
                 <Tools>
                     <li>
-                        <a>✎</a>
+                        <Tool>✎</Tool>
                     </li>
                     <li>
-                        <a onClick={handleDelete}>×</a>
+                        <Tool onClick={handleDelete}>×</Tool>
                     </li>
                 </Tools>
             )}

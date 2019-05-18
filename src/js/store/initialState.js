@@ -1,11 +1,13 @@
 export const initialState = {
-    authenticated: false,
-    syncPending: false,
-    downloadPending: true,
     ui: {
         errors: null,
         loading: false,
+        authenticated: false,
+        syncPending: false,
+        downloadPending: true,
+        userInitialised: false,
     },
+    user: {},
     db: {
         tasks: [],
         objectives: [],

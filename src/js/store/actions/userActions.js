@@ -1,7 +1,7 @@
 //  *USER ACTIONS
 import firebase from '../firebase'
 
-import { SET_ERROR, SET_AUTHENTICATED, SET_UNAUTHENTICATED, SET_LOADING, CLEAR_LOADING } from '../types'
+import { SET_ERROR, SET_AUTHENTICATED, SET_UNAUTHENTICATED, SET_LOADING, CLEAR_LOADING, LOAD_USERDATA } from '../types'
 
 export const checkUserAuthAction = async ({ state, dispatch }) => state
 
@@ -10,9 +10,14 @@ export const loginUserAction = async ({ email, password, history, dispatch }) =>
         await firebase
             .login(email, password)
             .then(res => {
+
                 dispatch({ type: SET_AUTHENTICATED })
                 history.push('/today')
                 dispatch({ type: CLEAR_LOADING })
+                dispatch({
+                    type: LOAD_USERDATA,
+                    payload: {dispatch,}
+                })
             })
             .catch(err => {
                 dispatch({ type: CLEAR_LOADING })
@@ -21,6 +26,7 @@ export const loginUserAction = async ({ email, password, history, dispatch }) =>
                     payload: { general: err.message },
                 })
             })
+
     } catch (error) {
         console.log(error)
     }
@@ -57,7 +63,8 @@ export const registerUserAction = async ({ name, email, password, history, dispa
             })
         })
 }
-export const setUserAction = (payload, state) => {
+export const setUserAction = (state, payload) => {
+    const {ui} = state
     const { displayName, uid, email } = payload.user
     const { lastSignInTime, creationTime } = payload.user.metadata
     const newUser = {
@@ -67,10 +74,10 @@ export const setUserAction = (payload, state) => {
         lastSignInTime,
         creationTime,
     }
-
+    ui.authenticated = true
     return {
         ...state,
-        authenticated: true,
+        ui,
         user: newUser,
     }
 }

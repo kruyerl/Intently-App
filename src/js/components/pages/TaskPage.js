@@ -27,7 +27,7 @@ const ActionsContainer = styled.ul`
     max-width: ${props => props.theme.screens.tablet};
 `
 
-const ErandPage = () => {
+const TaskPage = () => {
     const [state, setState] = useState({ value: '' })
     const context = useContext(AppContext)
 
@@ -51,7 +51,7 @@ const ErandPage = () => {
         document.getElementById('ActionFormInput').focus()
     }
 
-    return (
+    return context.state && (context.state.ui.authenticated === true) ? (
         <>
             <HeroHeader h1="Other Actions" h2="I will intentionaly guard my time">
                 <Text tag="h4" mod="black">
@@ -84,9 +84,9 @@ const ErandPage = () => {
             </Container>
             <FooterCTA h4="Being busy doesn't mean I am being effective. I must prioritise and execute" />
         </>
-    )
+    ) : (<div><br /><br /><br /><h1>{`Loading: AUTH${context.state.ui.authenticated}    and    STATE: ${context.state.stringify()}`}</h1></div>)
 }
 
-ErandPage.propTypes = {}
+TaskPage.propTypes = {}
 
-export default ErandPage
+export default TaskPage
