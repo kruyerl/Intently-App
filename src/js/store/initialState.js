@@ -15,10 +15,12 @@ export const initialState = {
         habits: [],
     },
     quotes: [
-        'I will do it because I said I would. I will uphold the standard I set for myself.',
-        'I will reject my excuses and take ownership of my situation. I will change my life.',
-        'I will find a way or make one.',
-        'I understand that nobody owes me a thing. I must earn my portion.',
-        'The rent is due. Pay the man.',
+        "Do it because you said you would. Uphold the standard you set for yourself.",
+        "Reject any excuses, take ownership of your situation & your life will change.",
+        "Either find a way. Or make one",
+        "Understand that nobody owes you a thing.",
+        "Understand that nobody owes you a thing. All.",
+        "Do not be afraid to take risks. Everything you want is on the other side of fear.",
+        "The rent is due. Pay the man.",
     ],
 }

@@ -19,6 +19,7 @@ import {
     ADD_TASK,
     UPDATE_TASK,
     DELETE_TASK,
+    REORDER_TASK,
     ADD_OBJECTIVE,
     UPDATE_OBJECTIVE,
     DELETE_OBJECTIVE,
@@ -28,6 +29,7 @@ import {
     ADD_ACTION,
     UPDATE_ACTION,
     DELETE_ACTION,
+    REORDER_ACTION,
 } from './types'
 
 import {
@@ -49,11 +51,11 @@ import {
 
 import { loadUserDataAction, syncDataAction, postUserDataAction } from './actions/dataActions'
 
-import { addTaskAction, updateTaskAction, deleteTaskAction } from './actions/taskActions'
+import { addTaskAction, updateTaskAction, deleteTaskAction, reorderTaskAction } from './actions/taskActions'
 
-import { addObjectiveAction, updateObjectiveAction, deleteObjectiveAction } from './actions/objectiveActions'
+import { addObjectiveAction, deleteObjectiveAction } from './actions/objectiveActions'
 import { addHabitAction, deleteHabitAction, updateHabitAction } from './actions/habitActions'
-import { addActionAction, deleteActionAction, updateActionAction } from './actions/actionActions'
+import { addActionAction, deleteActionAction, updateActionAction, reorderActionsAction } from './actions/actionActions'
 
 //  !Reducer
 const appReducer = (state, { type, payload }) => {
@@ -67,6 +69,8 @@ const appReducer = (state, { type, payload }) => {
             return updateActionAction(state, payload)
         case DELETE_ACTION:
             return deleteActionAction(state, payload)
+        case REORDER_ACTION:
+            return reorderActionsAction(state, payload)
 
         // ?HABITS
 
@@ -82,7 +86,7 @@ const appReducer = (state, { type, payload }) => {
         case ADD_OBJECTIVE:
             return addObjectiveAction(state, payload)
         case UPDATE_OBJECTIVE: // todo
-            return updateObjectiveAction(state, payload)
+            return state
         case DELETE_OBJECTIVE:
             return deleteObjectiveAction(state, payload)
 
@@ -94,6 +98,8 @@ const appReducer = (state, { type, payload }) => {
             return updateTaskAction(state, payload)
         case DELETE_TASK:
             return deleteTaskAction(state, payload)
+        case REORDER_TASK:
+            return reorderTaskAction(state, payload)
 
         //  !UI
 

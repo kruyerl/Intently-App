@@ -39,7 +39,7 @@ const colorModifier = ({ mod, theme }) => {
 }
 
 const StyledA = styled.a`
-    font-family: ${props => props.theme.fonts.headings.secondary};
+    font-family: ${props => props.theme.fonts.headings.primary};
     font-size: 16px;
     line-height: 1.5;
     margin: 0px 0px 20px 0px;
@@ -50,7 +50,7 @@ const StyledA = styled.a`
     ${props => colorModifier(props)};
 `
 const StyledLink = styled(Link)`
-    font-family: ${props => props.theme.fonts.headings.secondary};
+    font-family: ${props => props.theme.fonts.headings.primary};
     font-size: 16px;
     line-height: 1.5;
     margin: 0px 0px 20px 0px;
@@ -61,7 +61,7 @@ const StyledLink = styled(Link)`
     ${props => colorModifier(props)};
 `
 const StyledNavLink = styled(NavLink)`
-    font-family: ${props => props.theme.fonts.headings.secondary};
+    font-family: ${props => props.theme.fonts.headings.primary};
     font-size: 16px;
     line-height: 1.5;
     margin: 0px 0px 20px 0px;

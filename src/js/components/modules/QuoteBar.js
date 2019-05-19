@@ -6,7 +6,7 @@ import AppContext from '../../store/context'
 import Text from '../atoms/Text'
 
 const StyledBar = styled.article`
-    background-color: ${props => props.theme.colors.brand.base};
+    background-color: ${props => props.theme.colors.interactive.light};
     padding: 32px;
     display: flex;
     justify-content: center;
@@ -39,7 +39,7 @@ const QuoteBar = () => {
 
     return (
         <StyledBar>
-            <Text tag="h4" mod="white" align="center">
+            <Text tag="p" mod="white" align="center">
                 {state.quote}
             </Text>
         </StyledBar>

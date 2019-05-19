@@ -29,7 +29,6 @@ export const setLoadingAction = state => {
 export const clearLoadingAction = state => {
     const { ui } = state
     ui.loading = false
-    ui.errors = null
     return {
         ...state,
         ui,

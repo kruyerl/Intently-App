@@ -15,9 +15,15 @@ export function validateObjective(data) {
     // title
     if (isEmpty(data.title)) errors.title = 'Must not be empty'
     // due
-    if (isEmpty(data.due)) errors.due = 'Must not be empty'
+    if (data.due <= 0) {
+        errors.due = 'Must be in the future'
+    }
+    if (data.due >= 13) {
+        errors.due = 'Must be 12 or less'
+    }
     // why
     if (isEmpty(data.why)) errors.why = 'Must not be empty'
+
     return {
         errors,
         valid: Object.keys(errors).length === 0,

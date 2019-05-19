@@ -9,9 +9,11 @@ import LandingPage from './components/pages/LandingPage'
 import AuthPage from './components/pages/AuthPage'
 import TaskPage from './components/pages/TaskPage'
 import ObjectivesPage from './components/pages/ObjectivesPage'
+import Styles from './components/pages/Styles'
 import TodayPage from './components/pages/TodayPage'
 import NotFoundPage from './components/pages/NotFoundPage'
 import AppContext from './store/context'
+import QuoteBar from './components/modules/QuoteBar'
 import { LOAD_USERDATA, POST_DATA } from './store/types'
 
 const App = props => {
@@ -48,6 +50,7 @@ const App = props => {
                 <NavBar />
                 <Switch>
                     <UnAuthRoute path="/" exact component={LandingPage} />
+                    <AuthRoute path="/styles" exact component={Styles} />
                     <UnAuthRoute path="/login" exact component={AuthPage} />
                     <UnAuthRoute path="/login/:id" exact component={AuthPage} />
                     <AuthRoute path="/today" exact component={TodayPage} />
@@ -56,6 +59,7 @@ const App = props => {
                     <AuthRoute path="/other" exact component={TaskPage} />
                     <Route component={NotFoundPage} />
                 </Switch>
+                <QuoteBar />
             </Router>
         </>
     ) : (

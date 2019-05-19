@@ -1,13 +1,14 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import moment from 'moment'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import Text from '../atoms/Text'
 import Button from '../atoms/Button'
 import Action from './Action'
 import AddActionForm from './AddActionForm'
 import AppContext from '../../store/context'
-import { DELETE_OBJECTIVE } from '../../store/types'
+import { DELETE_OBJECTIVE, REORDER_ACTION } from '../../store/types'
 
 const Container = styled.section`
     background: ${props => props.theme.colors.layout.grey};
@@ -56,7 +57,6 @@ const ButtonBox = styled.div`
 
 const Objective = ({ obj }) => {
     const { state, dispatch } = useContext(AppContext)
-    const [habitCount, setHabitCount] = useState(0)
     const handleDelete = () => {
         dispatch({ type: DELETE_OBJECTIVE, payload: obj.uid })
     }
@@ -65,11 +65,42 @@ const Objective = ({ obj }) => {
     function countHabits() {
         return habits.filter(habit => habit.objective === obj.uid).length
     }
+
+    const onDragEnd = result => {
+        console.log('dropped', result)
+        const { destination, source, draggableId } = result
+        if (!destination) {
+            return
+        }
+        if (destination.droppableId === source.droppableId && destination.index === source.index) {
+            return
+        }
+
+        // action to move
+        const actionToMove = state.db.actions.filter(action => action.uid === draggableId)[0]
+        // filtered out current objective
+        const otherObjectivesActions = actions.filter(action => action.objective !== obj.uid)
+        // current objectives actions
+        const objectivesActions = actions.filter(action => action.objective === obj.uid)
+
+        objectivesActions.splice(source.index, 1)
+        objectivesActions.splice(destination.index, 0, actionToMove)
+
+        const allActionsOrder = [...objectivesActions, ...otherObjectivesActions]
+        console.log('allActionsOrder', allActionsOrder)
+        dispatch({
+            type: REORDER_ACTION,
+            payload: allActionsOrder,
+        })
+
+        return null
+    }
+
     return (
         <Container>
             <MaxWidth>
-                <Text tag="h4">Regarding my health</Text>
-                <Text tag="h3">{`I will ${obj.title}`}</Text>
+                <Text tag="h3">Regarding my {obj.category}</Text>
+                <Text tag="h2">{`I will ${obj.title} by the ${moment(obj.due).format('Do [of] MMMM')}`}</Text>
                 <Text tag="p">This matters to me because {obj.why}</Text>
                 <Stats>
                     <Text tag="small">
@@ -87,10 +118,9 @@ const Objective = ({ obj }) => {
                         I have finished <strong>{obj.totalHabits}</strong> habits.
                     </Text>
                 </Stats>
-                <Text tag="h4">These habits will foster the behaviour I need to succeed</Text>
+                <Text tag="h3">These habits will foster the behaviour I need to succeed</Text>
 
                 <ActionBox>
-                    {/* TODO: THIS IS WHERE HABITS GO */}
                     {habits &&
                         habits
                             .filter(habit => habit.objective === obj.uid)
@@ -98,15 +128,25 @@ const Objective = ({ obj }) => {
                     {habits && countHabits() < 2 ? <AddActionForm type="habit" objectiveUid={obj.uid} /> : null}
                 </ActionBox>
 
-                <ActionsContainer>
-                    <Text tag="h4">These are the actions I will take to accomplish my objective</Text>
-                    {actions &&
-                        actions
-                            .filter(action => action.objective === obj.uid)
-                            .map(action => <Action key={action.uid} type="action" obj={action} edit />)}
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId="obj.uid">
+                        {provided => (
+                            <ActionsContainer ref={provided.innerRef} {...provided.droppableProps}>
+                                <Text tag="h3">These are the actions I will take to accomplish my objective</Text>
 
-                    <AddActionForm type="action" objectiveUid={obj.uid} />
-                </ActionsContainer>
+                                {actions &&
+                                    actions
+                                        .filter(action => action.objective === obj.uid)
+                                        .map((action, index) => (
+                                            <Action key={action.uid} index={index} type="action" obj={action} edit />
+                                        ))}
+
+                                {provided.placeholder}
+                                <AddActionForm type="action" objectiveUid={obj.uid} />
+                            </ActionsContainer>
+                        )}
+                    </Droppable>
+                </DragDropContext>
 
                 <ButtonBox>
                     <Button mod="interactive">I achieved this objective</Button>

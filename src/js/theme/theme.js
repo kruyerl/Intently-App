@@ -33,8 +33,8 @@ export const theme = {
     },
     fonts: {
         headings: {
-            primary: `'worksans-bold', sans-serif`,
-            secondary: `'worksans-regular', sans-serif`,
+            primary: `'worksans-regular', sans-serif`,
+            secondary: `'worksans-bold', sans-serif`,
         },
         body: `'worksans-regular', sans-serif`,
     },

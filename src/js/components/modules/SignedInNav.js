@@ -37,7 +37,7 @@ const SignedInNav = () => {
                 </Anchor>
             </StyledAuth>
             <StyledAuth>
-                <Anchor mod="" tag="a" onClick={handleLogout}>
+                <Anchor mod="" tag="link" to="/" onClick={handleLogout}>
                     Sign out
                 </Anchor>
             </StyledAuth>

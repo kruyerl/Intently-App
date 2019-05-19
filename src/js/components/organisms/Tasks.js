@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Text from '../atoms/Text'
-import Action from '../modules/Action'
+import NonDragAction from '../modules/NonDragAction';
 import FooterCTA from './FooterCTA'
 import AppContext from '../../store/context'
 
@@ -32,7 +32,7 @@ const Tasks = ({ number }) => {
                     {context.state && context.state.db.tasks ? (
                         context.state.db.tasks
                             .slice(0, number)
-                            .map(task => <Action key={task.uid} type="task" obj={task} />)
+                            .map(task => <NonDragAction key={task.uid} type="task" obj={task} />)
                     ) : (
                         <Loader tag="p" />
                     )}

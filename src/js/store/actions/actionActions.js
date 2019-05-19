@@ -1,5 +1,5 @@
 import uuidv4 from 'uuid/v4'
-import { POST_DATA } from '../types'
+import {} from '../types'
 //  !TASK ACTIONS
 export const addActionAction = (state, { value, objectiveUid }) => {
     const { db, ui } = state
@@ -21,7 +21,7 @@ export const addActionAction = (state, { value, objectiveUid }) => {
     }
 }
 
-export const updateActionAction = (state, { value, dispatch }) => {
+export const updateActionAction = (state, { value }) => {
     const { db, ui } = state
     const newActions = []
     db.actions.forEach(action => {
@@ -45,6 +45,18 @@ export const deleteActionAction = (state, payload) => {
 
     const updates = db.actions.filter(action => action.uid !== payload)
     db.actions = updates
+    ui.syncPending = true
+    return {
+        ...state,
+        db,
+        ui,
+    }
+}
+
+export const reorderActionsAction = (state, payload) => {
+    const { db, ui } = state
+    db.actions = payload
+    ui.loading = false
     ui.syncPending = true
     return {
         ...state,

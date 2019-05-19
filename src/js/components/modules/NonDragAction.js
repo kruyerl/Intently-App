@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { rgba } from 'polished'
-import { Draggable } from 'react-beautiful-dnd'
 import Text from '../atoms/Text'
 import AppContext from '../../store/context'
 import { UPDATE_TASK, DELETE_TASK, UPDATE_HABIT, DELETE_HABIT, UPDATE_ACTION, DELETE_ACTION } from '../../store/types'
@@ -93,7 +92,7 @@ const Description = styled(Text)`
         `}
 `
 
-const Action = ({ type, obj, edit, index }) => {
+const NonDragAction = ({ type, obj, edit }) => {
     const {
         state: { db },
         dispatch,
@@ -146,39 +145,35 @@ const Action = ({ type, obj, edit, index }) => {
     }
 
     return db ? (
-        <Draggable draggableId={obj.uid} index={index}>
-            {provided => (
-                <Container {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                    <Task onClick={handleCheck}>
-                        <Checkbox checked={obj.complete} />
+        <Container>
+            <Task onClick={handleCheck}>
+                <Checkbox checked={obj.complete} />
 
-                        <Description tag="p" checked={obj.complete}>
-                            {obj.body && obj.body}
-                        </Description>
-                    </Task>
-                    {edit && (
-                        <Tools>
-                            <li>
-                                <Tool>✎</Tool>
-                            </li>
-                            <li>
-                                <Tool onClick={handleDelete}>×</Tool>
-                            </li>
-                            <li>
-                                <Tool>↕</Tool>
-                            </li>
-                        </Tools>
-                    )}
-                </Container>
+                <Description tag="p" checked={obj.complete}>
+                    {obj.body && obj.body}
+                </Description>
+            </Task>
+            {edit && (
+                <Tools>
+                    <li>
+                        <Tool>✎</Tool>
+                    </li>
+                    <li>
+                        <Tool onClick={handleDelete}>×</Tool>
+                    </li>
+                    <li>
+                        <Tool>↕</Tool>
+                    </li>
+                </Tools>
             )}
-        </Draggable>
+        </Container>
     ) : null
 }
 
-Action.propTypes = {
+NonDragAction.propTypes = {
     type: PropTypes.string.isRequired,
     obj: PropTypes.object.isRequired,
     edit: PropTypes.bool,
 }
 
-export default Action
+export default NonDragAction

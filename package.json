@@ -52,6 +52,7 @@
     "re-base": "^4.0.0",
     "react": "^16.8.6",
     "react-animated-css": "^1.2.0",
+    "react-beautiful-dnd": "^11.0.3",
     "react-dom": "^16.8.6",
     "react-firebase-hooks": "^1.2.1",
     "react-redux": "^7.0.3",

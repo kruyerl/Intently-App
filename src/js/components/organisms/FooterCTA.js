@@ -10,7 +10,7 @@ const Container = styled.section`
     background: ${props => props.theme.colors.layout.white};
 `
 const MaxWidth = styled.div`
-    padding: 0px 24px 80px 24px;
+    padding: 24px 24px 24px 24px;
     max-width: ${props => props.theme.screens.desktop};
     margin: 0 auto;
     display: flex;
@@ -24,9 +24,6 @@ const ActionsContainer = styled.ul`
     max-width: ${props => props.theme.screens.tablet};
 `
 
-const StyledHeading = styled(Text)`
-    margin: 40px 0px;
-`
 const StyledImgContainer = styled.div`
     margin: 0 0 0 auto;
 `
@@ -35,13 +32,18 @@ const StyledImg = styled.img`
     margin: 0 auto;
     width: 100%;
 `
-const FooterCTA = ({ children, h4 }) => (
+const FooterCTA = ({ children, heading, subheading }) => (
     <Container>
         <MaxWidth>
             <div>
-                <StyledHeading tag="h4" mod="black">
-                    {h4 ? h4 : ''}
-                </StyledHeading>
+                <Text tag="h3" mod="black">
+                    {heading ? heading : ''}
+                </Text>
+                {subheading &&
+                <Text tag="h4" mod="black">
+                    {subheading ? subheading : ''}
+                </Text>
+                }
                 {children}
             </div>
             <StyledImgContainer>

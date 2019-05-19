@@ -49,3 +49,14 @@ export const deleteTaskAction = (state, payload) => {
         ui,
     }
 }
+
+export const reorderTaskAction = (state, payload) => {
+    const { db, ui } = state
+    db.tasks = payload
+    ui.syncPending = true
+    return {
+        ...state,
+        db,
+        ui,
+    }
+}

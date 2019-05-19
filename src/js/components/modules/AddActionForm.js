@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { rgba } from 'polished'
-import Text from '../atoms/Text'
 import AppContext from '../../store/context'
 import { ADD_TASK, ADD_HABIT, ADD_ACTION } from '../../store/types'
 

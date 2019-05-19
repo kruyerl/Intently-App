@@ -1,16 +1,14 @@
-import React, { useEffect, useContext, useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import Text from '../atoms/Text'
-import HeroHeader from '../modules/HeroHeader'
+import SidekickHeader from '../modules/SidekickHeader'
 import FooterCTA from '../organisms/FooterCTA'
 import Action from '../modules/Action'
 import AddActionForm from '../modules/AddActionForm'
-import QuoteBar from '../modules/QuoteBar'
-import TasksOrganism from '../organisms/TasksOrganism'
-import { ADD_TASK } from '../../store/types'
 import AppContext from '../../store/context'
 import Loader from '../modules/Loader'
+import { REORDER_TASK } from '../../store/types'
 
 const Container = styled.section`
     background: ${props => props.theme.colors.layout.white};
@@ -20,7 +18,7 @@ const MaxWidth = styled.div`
     max-width: ${props => props.theme.screens.desktop};
     margin: 0 auto;
 `
-const ActionsContainer = styled.ul`
+const ActionsContainer = styled.div`
     padding: 0px;
     margin: 0px;
     margin-top: 30px;
@@ -28,45 +26,66 @@ const ActionsContainer = styled.ul`
 `
 
 const TaskPage = () => {
-    const [state, setState] = useState({ value: '' })
-    const context = useContext(AppContext)
+    const { state, dispatch } = useContext(AppContext)
 
-    return context.state && context.state.ui.authenticated === true ? (
+    const onDragEnd = result => {
+        console.log('dropped', result)
+        const { destination, source, draggableId } = result
+        if (!destination) {
+            return
+        }
+        if (destination.droppableId === source.droppableId && destination.index === source.index) {
+            return
+        }
+        const taskToMove = state.db.tasks.filter(task => task.uid === draggableId)[0]
+        const column = state.db.tasks
+        const newTaskOrder = Array.from(column)
+        newTaskOrder.splice(source.index, 1)
+        newTaskOrder.splice(destination.index, 0, taskToMove)
+
+        dispatch({
+            type: REORDER_TASK,
+            payload: newTaskOrder,
+        })
+
+        return null
+    }
+
+    return state && state.ui.authenticated === true ? (
         <>
-            <HeroHeader h1="Other Actions" h2="I will intentionaly guard my time">
-                <Text tag="h4" mod="black">
-                    Its easy to be busy. I will prioritise & execute with my objectives in mind
-                </Text>
-            </HeroHeader>
-            <QuoteBar />
+            <SidekickHeader
+                textMain="Other Actions"
+                textSub="Its easy to be busy. I will prioritise & execute with my objectives in mind"
+            />
+
             <Container>
                 <MaxWidth>
-                    <Text tag="h4" mod="black">
-                        These are the secondary items I must take to stay on top of everything.
+                    <Text tag="h3" mod="black">
+                        These are the tasks that need to get done but aren't crucial to achieving your objectives.
                     </Text>
-                    <ActionsContainer>
-                        {context.state && context.state.db.tasks ? (
-                            context.state.db.tasks.map(task => <Action key={task.uid} type="task" obj={task} edit />)
-                        ) : (
-                            <Loader tag="p" />
-                        )}
+                    <DragDropContext onDragEnd={onDragEnd}>
+                        <Droppable droppableId="taskPage">
+                            {provided => (
+                                <ActionsContainer ref={provided.innerRef} {...provided.droppableProps}>
+                                    {state && state.db.tasks ? (
+                                        state.db.tasks.map((task, mapIndex) => (
+                                            <Action key={task.uid} index={mapIndex} type="task" obj={task} edit />
+                                        ))
+                                    ) : (
+                                        <Loader tag="p" />
+                                    )}
 
-                        <AddActionForm type="task" />
-                    </ActionsContainer>
+                                    {provided.placeholder}
+                                    <AddActionForm type="task" />
+                                </ActionsContainer>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
                 </MaxWidth>
             </Container>
             <FooterCTA h4="Being busy doesn't mean I am being effective. I must prioritise and execute" />
         </>
-    ) : (
-        <div>
-            <br />
-            <br />
-            <br />
-            <h1>Loading</h1>
-        </div>
-    )
+    ) : null
 }
-
-TaskPage.propTypes = {}
 
 export default TaskPage

@@ -64,6 +64,7 @@ const StyledButton = styled.button`
     transition: all 300ms ease-in-out;
     white-space: nowrap;
     ${props => modifier(props)}
+    ${props => (props.z ? props.theme.shadows.z1 : null)}
 
     cursor: pointer;
     &:hover {
@@ -74,9 +75,9 @@ const StyledButton = styled.button`
     }
 `
 
-export default function Button({ mod, children, className, unactive, ...rest }) {
+export default function Button({ mod, children, className, unactive, z, ...rest }) {
     return (
-        <StyledButton unactive={unactive} mod={mod} {...rest} className={className}>
+        <StyledButton unactive={unactive} mod={mod} {...rest} z={z} className={className}>
             {children}
         </StyledButton>
     )

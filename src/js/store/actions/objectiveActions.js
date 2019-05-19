@@ -1,15 +1,20 @@
 import uuidv4 from 'uuid/v4'
-import { POST_DATA } from '../types'
+import moment from 'moment'
+import {} from '../types'
 //  !OBJECTIVE ACTIONS
-export const addObjectiveAction = (state, { value, dispatch }) => {
+export const addObjectiveAction = (state, { value }) => {
     const { db, ui } = state
     const { title, why, due, category } = value
+    const projectedDue = moment(Date.now())
+        .add(due, 'weeks')
+        .format()
+    // todo
     const newObjective = {
         uid: uuidv4(),
         category,
         title,
         why,
-        due,
+        due: projectedDue,
         createdAt: Date.now(),
         totalTasks: 0,
         totalHabits: 0,

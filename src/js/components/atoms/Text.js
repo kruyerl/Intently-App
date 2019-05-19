@@ -12,7 +12,7 @@ const modifier = (prop, props) => {
         case 'white':
             return rgba(props.theme.colors.layout.white, 0.9)
         case 'grey':
-            return rgba(props.theme.colors.layout.black, 0.4)
+            return rgba(props.theme.colors.layout.black, 0.2)
         case 'warning':
             return rgba(props.theme.colors.denotive.warning, 0.9)
         default:
@@ -35,42 +35,42 @@ const alignModifier = prop => {
 
 const H1 = styled.h1`
     font-family: ${props => props.theme.fonts.headings.primary};
-    font-size: 56px;
-    font-weight: 600;
+    font-size: 3.8em;
+    font-weight: 300;
     line-height: 1.2;
-    margin: 0px 0px 16px 0px;
+    margin: 0px 0px 12px 0px;
     color: ${props => modifier(props.mod, props)};
-    max-width: 500px;
+    max-width: 600px;
     ${props => alignModifier(props.align)};
 `
 const H2 = styled.h2`
     font-family: ${props => props.theme.fonts.headings.secondary};
-    font-size: 48px;
+    font-size: 2.5em;
     font-weight: 300;
     line-height: 1.2;
-    margin: 0px 0px 16px 0px;
+    margin: 0px 0px 12px 0px;
     color: ${props => modifier(props.mod, props)};
-    max-width: 500px;
+    max-width: 600px;
     ${props => alignModifier(props.align)};
 `
 const H3 = styled.h3`
     font-family: ${props => props.theme.fonts.headings.primary};
-    font-size: 32px;
-    font-weight: 600;
-    line-height: 1.2;
-    margin: 0px 0px 16px 0px;
+    font-size: 1.8em;
+    font-weight: 300;
+    line-height: 1.5;
+    margin: 0px 0px 12px 0px;
     color: ${props => modifier(props.mod, props)};
-    max-width: 500px;
+    max-width: 600px;
     ${props => alignModifier(props.align)};
 `
 const H4 = styled.h4`
     font-family: ${props => props.theme.fonts.headings.secondary};
-    font-size: 24px;
+    font-size: 1.4em;
     font-weight: 300;
-    line-height: 1.2;
-    margin: 0px 0px 16px 0px;
+    line-height: 1.6;
+    margin: 0px 0px 12px 0px;
     color: ${props => modifier(props.mod, props)};
-    max-width: 500px;
+    max-width: 600px;
     ${props => alignModifier(props.align)};
 `
 const P = styled.p`
@@ -79,16 +79,19 @@ const P = styled.p`
     line-height: 1.5;
     margin: 0px 0px 16px 0px;
     color: ${props => modifier(props.mod, props)};
-    max-width: 500px;
+    max-width: 600px;
     ${props => alignModifier(props.align)};
+    strong {
+        font-weight: 500;
+    }
 `
 const Small = styled.small`
-    font-family: ${props => props.theme.fonts.headings.secondary};
-    font-size: 12px;
+    font-family: ${props => props.theme.fonts.headings.primary};
+    font-size: 0.8em;
     line-height: 1.5;
-    margin: 0px 0px 16px 0px;
+    margin: 0px 0px 12px 0px;
     color: ${props => modifier(props.mod, props)};
-    max-width: 500px;
+    max-width: 600px;
     ${props => alignModifier(props.align)};
 `
 

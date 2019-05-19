@@ -2,7 +2,9 @@ import React, { useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Text from '../atoms/Text'
-import Action from '../modules/Action'
+import Button from '../atoms/Button'
+import NonDragAction from '../modules/NonDragAction'
+import AppContext from '../../store/context'
 
 const Container = styled.section`
     background: ${props => props.theme.colors.layout.grey};
@@ -15,22 +17,36 @@ const MaxWidth = styled.div`
 const ActionsContainer = styled.ul`
     padding: 0px;
     margin: 0px;
-    margin-top: 30px;
+    margin-top: 16px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     max-width: ${props => props.theme.screens.tablet};
 `
-const Commitments = () => (
-    <Container>
-        <MaxWidth>
-            <Text tag="h3" mod="black">
-                Daily commitments:
-            </Text>
-            <ActionsContainer>
-            </ActionsContainer>
-        </MaxWidth>
-    </Container>
-)
+const Commitments = () => {
+    const { state, dispatch } = useContext(AppContext)
+    const { habits } = state.db
+    return state ? (
+        <Container>
+            <MaxWidth>
+                <Text tag="h3" mod="black">
+                    Daily commitments:
+                </Text>
+                <ActionsContainer>
+                    {habits && habits.map(habit => <NonDragAction key={habit.uid} type="habit" obj={habit} />)}
+                </ActionsContainer>
+                {habits && habits.length === 0 ? (
+                    <>
+                        <Text tag="p" mod="black">
+                            The next habits of each of your objectives show up here everyday
+                        </Text>
+                        <br />
+                        <Button mod="white">Set an objective</Button>
+                    </>
+                ) : null}
+            </MaxWidth>
+        </Container>
+    ) : null
+}
 
 Commitments.propTypes = {}
 

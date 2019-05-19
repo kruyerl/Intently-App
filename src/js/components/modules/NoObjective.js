@@ -2,15 +2,13 @@
 import React, { useEffect, useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import moment from 'moment'
 import { validateObjective } from '../../utilities/validators'
 import Text from '../atoms/Text'
 import Button from '../atoms/Button'
-import Anchor from '../atoms/Anchor'
-import { Input, TextArea, Select, Label } from '../atoms/Form'
+import { Input, TextArea, Label } from '../atoms/Form'
 import img from '../../../assets/img/home1.png'
 import AppContext from '../../store/context'
-import { ADD_OBJECTIVE, SET_ERROR, SET_LOADING, CLEAR_ERROR, CLEAR_LOADING } from '../../store/types'
+import { ADD_OBJECTIVE, SET_ERROR, CLEAR_ERROR } from '../../store/types'
 
 const Container = styled.section`
     background: ${props => props.theme.colors.layout.grey};
@@ -66,23 +64,21 @@ const Status = styled.div`
 
 const NoObjective = ({ match }) => {
     const context = useContext(AppContext)
-
+console.log('match',match.params.id)
     const initialState = {
         category: match.params.id,
         title: '',
         why: '',
-        due: moment()
-            .format()
-            .slice(0, 10),
+        due: 12,
         formIsOpen: false,
     }
     const [state, setState] = useState(initialState)
 
     useEffect(
         () => () => {
-            context.dispatch({
-                type: CLEAR_ERROR,
-            })
+                context.dispatch({
+                    type: CLEAR_ERROR,
+                })
         },
         []
     )
@@ -90,6 +86,7 @@ const NoObjective = ({ match }) => {
     const handleChange = e => {
         setState({
             ...state,
+            category: match.params.id,
             [e.target.name]: e.target.value,
         })
     }
@@ -109,7 +106,6 @@ const NoObjective = ({ match }) => {
         const validated = validateObjective(state)
         if (validated.valid) {
             setState(initialState)
-
             context.dispatch({
                 type: ADD_OBJECTIVE,
                 payload: {
@@ -129,6 +125,9 @@ const NoObjective = ({ match }) => {
         setState({
             ...state,
             formIsOpen: false,
+        })
+        context.dispatch({
+            type: CLEAR_ERROR,
         })
     }
 
@@ -161,13 +160,19 @@ const NoObjective = ({ match }) => {
         <Container>
             <MaxWidth>
                 <ContentBox>
-                    <Text tag="h4">No Objectives? All Finished?</Text>
-                    <Text tag="h3">Wrong. Time to be intentional and move forward.</Text>
+                    <Text tag="h4">
+                        {state && state.formIsOpen ? `Great! Let's Begin` : "No objective? All finished?"}
+                    </Text>
+                    <Text tag="h3">
+                        {state && state.formIsOpen
+                            ? `Regarding your ${match.params.id}`
+                            : 'Now is the time to be intentional about crafting your future.'}
+                    </Text>
 
                     <form noValidate onSubmit={handleSubmit}>
                         <StyledFormElements formIsOpen={state.formIsOpen}>
                             <Labels>
-                                <Text tag="p">What do you want to achieve?</Text>
+                                <Text tag="p">What will you achieve?</Text>
                                 <Input
                                     type="text"
                                     placeholder="I will..."
@@ -178,10 +183,10 @@ const NoObjective = ({ match }) => {
                                 {isError('title', 'right')}
                             </Labels>
                             <Labels>
-                                <Text tag="p">When will you reach your objective?</Text>
+                                <Text tag="p">How many weeks would this take?</Text>
                                 <Input
-                                    type="date"
-                                    placeholder="I will..."
+                                    type="number"
+                                    placeholder="12"
                                     value={state.due}
                                     name="due"
                                     onChange={handleChange}
@@ -189,7 +194,7 @@ const NoObjective = ({ match }) => {
                                 {isError('due', 'right')}
                             </Labels>
                             <Labels>
-                                <Text tag="p">Why is it important to you that you achieve this objective?</Text>
+                                <Text tag="p">This matters to you because?</Text>
                                 <TextArea
                                     type="text"
                                     placeholder="This matters to me because..."
@@ -220,6 +225,8 @@ const NoObjective = ({ match }) => {
     )
 }
 
-NoObjective.propTypes = {}
+NoObjective.propTypes = {
+    match: PropTypes.object.isRequired,
+}
 
 export default NoObjective

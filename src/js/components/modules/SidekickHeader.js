@@ -8,13 +8,11 @@ import background from '../../../assets/img/signupBackground2.png'
 const HeroContainer = styled.header`
     background: url(${props => (props.backgroundImg ? props.backgroundImg : background)});
     background-size: cover;
-    background-position: right;
+    background-position: center;
     width: 100%;
 
     padding: 120px 0px 60px 0px;
-    @media (max-width: ${props => props.theme.screens.tablet}) {
-        padding: 100px 0px 0px 0px;
-    }
+
     span {
         display: flex;
         flex-direction: column;
@@ -22,6 +20,7 @@ const HeroContainer = styled.header`
         align-items: flex-start;
         margin: 0 auto;
         max-width: ${props => props.theme.screens.desktop};
+        min-height: 300px;
     }
 `
 const IntroTextBox = styled.div`
@@ -30,35 +29,24 @@ const IntroTextBox = styled.div`
 const Heading = styled(Text)`
     ${props => (props.capitalize ? `text-transform: capitalize` : null)}
 `
-const WhiteBlock = styled.div`
-    background: ${props => props.theme.colors.layout.white};
-    max-width: 600px;
-    padding: 24px;
-    padding-left: 32px;
-    margin-top: 24px;
-    margin-right: 24px;
-    width: 100%;
-
-    @media (max-width: ${props => props.theme.screens.tablet}) {
-        margin-right: 0px;
-        padding-bottom: 40px;
-    }
+const SubHeading = styled(Text)`
+    ${props => (props.capitalize ? `text-transform: capitalize` : null)}
+    max-width: ${props => props.theme.screens.mobile};
 `
 
-const HeroHeader = ({ backgroundImg, children, h1, h2, capitalize }) => (
+const SidekickHeader = ({ backgroundImg, children, textMain, textSub, capitalize }) => (
     <HeroContainer>
         <span>
             <IntroTextBox>
-                <Heading capitalize={capitalize} tag="h2" mod="black">
-                    {h1 || 'Welcome back'}
+                <Heading capitalize={capitalize} tag="h2" mod="brand">
+                    {textMain}
                 </Heading>
-                <Text tag="h1" mod="black">
-                    {h2 || 'Todays focus'}
-                </Text>
+                <SubHeading tag="p" mod="black">
+                    {textSub}
+                </SubHeading>
             </IntroTextBox>
-            <WhiteBlock>{children}</WhiteBlock>
         </span>
     </HeroContainer>
 )
 
-export default HeroHeader
+export default SidekickHeader

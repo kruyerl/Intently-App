@@ -23,11 +23,13 @@ export const CLEAR_LOADING = 'CLEAR_LOADING'
 export const ADD_TASK = 'ADD_TASK'
 export const UPDATE_TASK = 'UPDATE_TASK'
 export const DELETE_TASK = 'DELETE_TASK'
+export const REORDER_TASK = 'REORDER_TASK'
 
 //* Objective Types
 export const ADD_OBJECTIVE = 'ADD_OBJECTIVE'
 export const UPDATE_OBJECTIVE = 'UPDATE_OBJECTIVE'
 export const DELETE_OBJECTIVE = 'DELETE_OBJECTIVE'
+export const REORDER_OBJECTIVES = 'REORDER_OBJECTIVES'
 
 //* Habit Types
 export const ADD_HABIT = 'ADD_HABIT'
@@ -38,3 +40,4 @@ export const DELETE_HABIT = 'DELETE_HABIT'
 export const ADD_ACTION = 'ADD_ACTION'
 export const UPDATE_ACTION = 'UPDATE_ACTION'
 export const DELETE_ACTION = 'DELETE_ACTION'
+export const REORDER_ACTION = 'REORDER_ACTION'

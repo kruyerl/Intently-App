@@ -116,7 +116,7 @@ const AuthSignUp = ({ history }) => {
                 </Text>
                 <Label>
                     <StyledLabel>
-                        <div>Name</div>
+                        <div>First Name</div>
                         {isError('name', 'right')}
                     </StyledLabel>
                     <Input type="text" value={state.name} name="name" onChange={handleChange} />
