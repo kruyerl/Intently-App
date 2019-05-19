@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { rgba } from 'polished'
 import Text from '../atoms/Text'
 import AppContext from '../../store/context'
-import { UPDATE_TASK, DELETE_TASK } from '../../store/types'
+import { UPDATE_TASK, DELETE_TASK, UPDATE_HABIT, DELETE_HABIT, UPDATE_ACTION, DELETE_ACTION } from '../../store/types'
 
 const Container = styled.section`
     padding: 8px;
@@ -92,44 +92,66 @@ const Description = styled(Text)`
         `}
 `
 
-const Action = ({ checked, body, index, edit }) => {
+const Action = ({ type, obj, edit }) => {
     const {
-        state: {
-            db: { tasks },
-        },
+        state: { db },
         dispatch,
     } = useContext(AppContext)
 
+    function getType(typeOf) {
+        switch (typeOf) {
+            case 'habit':
+                return UPDATE_HABIT
+            case 'task':
+                return UPDATE_TASK
+            case 'action':
+                return UPDATE_ACTION
+            default:
+                break
+        }
+    }
+    function getDeleteType(typeOf) {
+        switch (typeOf) {
+            case 'habit':
+                return DELETE_HABIT
+            case 'task':
+                return DELETE_TASK
+            case 'action':
+                return DELETE_ACTION
+            default:
+                break
+        }
+    }
+
     const handleCheck = e => {
-        const thisTask = tasks.filter(task => task.uid === index)[0]
-        thisTask.complete = !thisTask.complete
+        const updateType = getType(type)
+        const itemToCheck = db[`${type}s`].filter(item => item.uid === obj.uid)[0]
+        itemToCheck.complete = !itemToCheck.complete
         dispatch({
-            type: UPDATE_TASK,
+            type: updateType,
             payload: {
-                value: thisTask,
-                dispatch,
+                value: itemToCheck,
             },
         })
     }
     const handleDelete = e => {
+        const deleteType = getDeleteType(type)
         e.preventDefault()
-        const thisTask = tasks.filter(task => task.uid === index)[0]
+        const itemToDelete = db[`${type}s`].filter(item => item.uid === obj.uid)[0]
         dispatch({
-            type: DELETE_TASK,
-            payload: {
-                value: thisTask,
-                dispatch,
-            },
+            type: deleteType,
+            payload: itemToDelete.uid,
+
         })
     }
 
-    return tasks ? (
+    return db ? (
         <Container>
             <Task onClick={handleCheck}>
-                <Checkbox checked={checked} />
+                <Checkbox checked={obj.complete} />
 
-                <Description tag="p" checked={checked}>
-                    {body && body}
+                <Description tag="p" checked={obj.complete}>
+                    {obj.body && obj.body}
                 </Description>
             </Task>
             {edit && (

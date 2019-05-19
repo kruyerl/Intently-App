@@ -16,7 +16,7 @@ const Nav = styled.nav`
     right: 0px;
     padding: 16px;
     ${props => props.theme.shadows.z1};
-
+    z-index: 100;
     span {
         display: flex;
         justify-content: space-between;

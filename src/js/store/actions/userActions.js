@@ -10,13 +10,12 @@ export const loginUserAction = async ({ email, password, history, dispatch }) =>
         await firebase
             .login(email, password)
             .then(res => {
-
                 dispatch({ type: SET_AUTHENTICATED })
                 history.push('/today')
                 dispatch({ type: CLEAR_LOADING })
                 dispatch({
                     type: LOAD_USERDATA,
-                    payload: {dispatch,}
+                    payload: { dispatch },
                 })
             })
             .catch(err => {
@@ -26,24 +25,20 @@ export const loginUserAction = async ({ email, password, history, dispatch }) =>
                     payload: { general: err.message },
                 })
             })
-
     } catch (error) {
         console.log(error)
     }
 }
 
 export const logoutUserAction = async ({ dispatch }) => {
-    await firebase
-        .logout()
-        .then(res => {
-            dispatch({ type: SET_UNAUTHENTICATED })
+    // dispatch({ type: SET_UNAUTHENTICATED });
+    await firebase.logout().catch(err => {
+        dispatch({
+            type: SET_ERROR,
+            payload: { general: err.message },
         })
-        .catch(err => {
-            dispatch({
-                type: SET_ERROR,
-                payload: { general: err.message },
-            })
-        })
+    })
+    window.location.replace('/')
 }
 
 export const registerUserAction = async ({ name, email, password, history, dispatch }) => {
@@ -64,7 +59,7 @@ export const registerUserAction = async ({ name, email, password, history, dispa
         })
 }
 export const setUserAction = (state, payload) => {
-    const {ui} = state
+    const { ui } = state
     const { displayName, uid, email } = payload.user
     const { lastSignInTime, creationTime } = payload.user.metadata
     const newUser = {

@@ -20,23 +20,27 @@ const App = props => {
 
     // manage ALL state transfers to & from firebase
 
-
-    useEffect(()=>{
+    useEffect(() => {
         console.log('State Updated!', state)
-        if((user) && (state) && (state.user) && (state.ui.syncPending)){
-            console.log('UploadAway!')
+        if (user && state && state.user && state.ui.syncPending) {
+            dispatch({
+                type: POST_DATA,
+            })
         }
-        if((user) && (state.ui.downloadPending)){
-            console.log('Fetch Data!')
+        if (user && state.ui.downloadPending) {
             dispatch({
                 type: LOAD_USERDATA,
-                payload: {dispatch,}
+                payload: { dispatch },
             })
         }
 
-    },[initialising, state])
-    //Has user & needs to fetch data to FB
-    //Has user & needs to post data to FB
+        if (user && state.user.uid === undefined) {
+            dispatch({
+                type: LOAD_USERDATA,
+                payload: { dispatch },
+            })
+        }
+    }, [initialising, state])
 
     return initialising !== true ? (
         <>
@@ -48,13 +52,21 @@ const App = props => {
                     <UnAuthRoute path="/login/:id" exact component={AuthPage} />
                     <AuthRoute path="/today" exact component={TodayPage} />
                     <AuthRoute path="/objectives" exact component={ObjectivesPage} />
+                    <AuthRoute path="/objectives/:id" exact component={ObjectivesPage} />
                     <AuthRoute path="/other" exact component={TaskPage} />
                     <Route component={NotFoundPage} />
                 </Switch>
             </Router>
         </>
-    ) : <div><br/><br/><br/><br/><h1>Loading</h1></div>
-
+    ) : (
+        <div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <h1>Loading</h1>
+        </div>
+    )
 }
 
 export default App

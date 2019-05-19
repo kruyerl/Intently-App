@@ -31,27 +31,7 @@ const TaskPage = () => {
     const [state, setState] = useState({ value: '' })
     const context = useContext(AppContext)
 
-    const handleClickButton = e => {}
-    const handleChange = e => {
-        setState({ value: e.target.value })
-    }
-
-    const handleSubmit = e => {
-        e.preventDefault()
-        context.dispatch({
-            type: ADD_TASK,
-            payload: {
-                value: state.value,
-                dispatch: context.dispatch,
-            },
-        })
-        setState({
-            value: '',
-        })
-        document.getElementById('ActionFormInput').focus()
-    }
-
-    return context.state && (context.state.ui.authenticated === true) ? (
+    return context.state && context.state.ui.authenticated === true ? (
         <>
             <HeroHeader h1="Other Actions" h2="I will intentionaly guard my time">
                 <Text tag="h4" mod="black">
@@ -66,25 +46,25 @@ const TaskPage = () => {
                     </Text>
                     <ActionsContainer>
                         {context.state && context.state.db.tasks ? (
-                            context.state.db.tasks.map(({ uid, complete, body }) => (
-                                <Action key={uid} index={uid} body={body} checked={complete} edit />
-                            ))
+                            context.state.db.tasks.map(task => <Action key={task.uid} type="task" obj={task} edit />)
                         ) : (
                             <Loader tag="p" />
                         )}
 
-                        <AddActionForm
-                            value={state.value}
-                            onClickButton={handleClickButton}
-                            onChange={handleChange}
-                            onSubmit={handleSubmit}
-                        />
+                        <AddActionForm type="task" />
                     </ActionsContainer>
                 </MaxWidth>
             </Container>
             <FooterCTA h4="Being busy doesn't mean I am being effective. I must prioritise and execute" />
         </>
-    ) : (<div><br /><br /><br /><h1>{`Loading: AUTH${context.state.ui.authenticated}    and    STATE: ${context.state.stringify()}`}</h1></div>)
+    ) : (
+        <div>
+            <br />
+            <br />
+            <br />
+            <h1>Loading</h1>
+        </div>
+    )
 }
 
 TaskPage.propTypes = {}

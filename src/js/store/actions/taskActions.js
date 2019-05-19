@@ -1,8 +1,8 @@
 import uuidv4 from 'uuid/v4'
 import { POST_DATA } from '../types'
 //  !TASK ACTIONS
-export const addTaskAction = (state, { value, dispatch }) => {
-    const { db } = state
+export const addTaskAction = (state, { value, objectiveUid }) => {
+    const { db, ui } = state
     const newTask = {
         createdAt: Date.now(),
         uid: uuidv4(),
@@ -11,17 +11,12 @@ export const addTaskAction = (state, { value, dispatch }) => {
         due: null,
         sheduled: null,
     }
-    console.log('newTask', newTask)
     db.tasks.push(newTask)
-    dispatch({
-        type: POST_DATA,
-        payload: {
-            dispatch,
-        },
-    })
+    ui.syncPending = true
     return {
         ...state,
         db,
+        ui,
     }
 }
 
@@ -43,9 +38,9 @@ export const updateTaskAction = (state, { value, dispatch }) => {
     }
 }
 
-export const deleteTaskAction = (state, { value }) => {
+export const deleteTaskAction = (state, payload) => {
     const { db, ui } = state
-    const updates = db.tasks.filter(task => task.uid !== value.uid)
+    const updates = db.tasks.filter(task => task.uid !== payload)
     db.tasks = updates
     ui.syncPending = true
     return {

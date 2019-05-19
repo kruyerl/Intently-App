@@ -18,3 +18,13 @@ export const keyframeRattle = keyframes`
     transform: rotate(0deg);
   }
 `
+
+export const keyframeGrow = keyframes`
+  0% {
+    max-height: 0px;
+  }
+
+  100% {
+    max-height: 500px;
+  }
+`

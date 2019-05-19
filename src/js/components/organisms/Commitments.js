@@ -27,14 +27,6 @@ const Commitments = () => (
                 Daily commitments:
             </Text>
             <ActionsContainer>
-                <Action checked />
-                <Action checked />
-                <Action />
-                <Action checked />
-                <Action checked />
-                <Action />
-                <Action />
-                <Action />
             </ActionsContainer>
         </MaxWidth>
     </Container>

@@ -10,20 +10,21 @@ const isEmpty = string => {
     return false
 }
 
-export const validateReset = email => {
+export function validateObjective(data) {
     const errors = {}
-    if (isEmpty(email)) {
-        errors.email = 'Must not be empty'
-    } else if (!isEmail(email)) {
-        errors.email = 'Must be a valid email address'
-    }
+    // title
+    if (isEmpty(data.title)) errors.title = 'Must not be empty'
+    // due
+    if (isEmpty(data.due)) errors.due = 'Must not be empty'
+    // why
+    if (isEmpty(data.why)) errors.why = 'Must not be empty'
     return {
         errors,
         valid: Object.keys(errors).length === 0,
     }
 }
 
-export const validateSignUp = data => {
+export function validateSignUp(data) {
     const errors = {}
 
     if (isEmpty(data.name)) {
@@ -42,7 +43,7 @@ export const validateSignUp = data => {
     }
 }
 
-export const validateSignIn = data => {
+export function validateSignIn(data) {
     const errors = {}
     if (isEmpty(data.email)) errors.email = 'Must not be empty'
     else if (!isEmail(data.email)) errors.email = 'Must be a valid email address'

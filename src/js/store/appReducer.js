@@ -17,9 +17,17 @@ import {
     POST_DATA,
     SET_NAME,
     ADD_TASK,
-    REMOVE_TASK,
     UPDATE_TASK,
     DELETE_TASK,
+    ADD_OBJECTIVE,
+    UPDATE_OBJECTIVE,
+    DELETE_OBJECTIVE,
+    ADD_HABIT,
+    UPDATE_HABIT,
+    DELETE_HABIT,
+    ADD_ACTION,
+    UPDATE_ACTION,
+    DELETE_ACTION,
 } from './types'
 
 import {
@@ -29,6 +37,7 @@ import {
     setUserAction,
     checkUserAuthAction,
 } from './actions/userActions'
+
 import {
     setErrorAction,
     clearErrorAction,
@@ -37,14 +46,47 @@ import {
     setAuthenticatedAction,
     setUnAuthenticatedAction,
 } from './actions/uiActions'
+
 import { loadUserDataAction, syncDataAction, postUserDataAction } from './actions/dataActions'
+
 import { addTaskAction, updateTaskAction, deleteTaskAction } from './actions/taskActions'
+
+import { addObjectiveAction, updateObjectiveAction, deleteObjectiveAction } from './actions/objectiveActions'
+import { addHabitAction, deleteHabitAction, updateHabitAction } from './actions/habitActions'
+import { addActionAction, deleteActionAction, updateActionAction } from './actions/actionActions'
 
 //  !Reducer
 const appReducer = (state, { type, payload }) => {
     console.log(`dispatched: ${type}`)
     switch (type) {
-        //
+        // ?HABITS
+
+        case ADD_ACTION:
+            return addActionAction(state, payload)
+        case UPDATE_ACTION: // todo
+            return updateActionAction(state, payload)
+        case DELETE_ACTION:
+            return deleteActionAction(state, payload)
+
+        // ?HABITS
+
+        case ADD_HABIT:
+            return addHabitAction(state, payload)
+        case UPDATE_HABIT: // todo
+            return updateHabitAction(state, payload)
+        case DELETE_HABIT:
+            return deleteHabitAction(state, payload)
+
+        // ?objectives
+
+        case ADD_OBJECTIVE:
+            return addObjectiveAction(state, payload)
+        case UPDATE_OBJECTIVE: // todo
+            return updateObjectiveAction(state, payload)
+        case DELETE_OBJECTIVE:
+            return deleteObjectiveAction(state, payload)
+
+        // ?TASK
 
         case ADD_TASK:
             return addTaskAction(state, payload)
@@ -70,8 +112,7 @@ const appReducer = (state, { type, payload }) => {
             loginUserAction(payload)
             return state
         case LOGOUT_USER:
-            logoutUserAction(payload)
-            return state
+            return logoutUserAction(payload)
         case SET_AUTHENTICATED:
             return setAuthenticatedAction(state)
         case SET_UNAUTHENTICATED:

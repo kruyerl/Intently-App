@@ -32,9 +32,7 @@ const Tasks = ({ number }) => {
                     {context.state && context.state.db.tasks ? (
                         context.state.db.tasks
                             .slice(0, number)
-                            .map(({ uid, complete, body }) => (
-                                <Action key={uid} index={uid} body={body} checked={complete} />
-                            ))
+                            .map(task => <Action key={task.uid} type="task" obj={task} />)
                     ) : (
                         <Loader tag="p" />
                     )}

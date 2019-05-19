@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Text from '../atoms/Text'
@@ -11,7 +11,6 @@ import Commitments from '../organisms/Commitments'
 import FooterCTA from '../organisms/FooterCTA'
 import Tasks from '../organisms/Tasks'
 import AppContext from '../../store/context'
-import { LOAD_USERDATA, SET_NAME, POST_DATA } from '../../store/types'
 
 const StyledButton = styled(Button)`
     margin-right: 16px;
@@ -21,20 +20,15 @@ const StyledButtonContainer = styled.div`
 `
 
 const TodayPage = () => {
-    const { state, dispatch } = useContext(AppContext)
+    const { state } = useContext(AppContext)
 
-    return state && (state.ui.authenticated === true) ? (
+    return state && state.ui.authenticated === true ? (
         <>
-            <HeroHeader capitalize h1={`Welcome NAME`}>
+            <HeroHeader capitalize h1="Welcome NAME">
                 <Text tag="h3" mod="black">
                     Todays main focus:
                 </Text>
-                <div>
-                    <Action />
-                    <Action checked />
-                    <Action />
-                    <Action edit />
-                </div>
+                <div />
             </HeroHeader>
             <QuoteBar />
             <Commitments />
@@ -50,6 +44,13 @@ const TodayPage = () => {
                 </StyledButtonContainer>
             </FooterCTA>
         </>
-    ) : <div><br /><br /><br /><h1>Loading</h1></div>
+    ) : (
+        <div>
+            <br />
+            <br />
+            <br />
+            <h1>Loading</h1>
+        </div>
+    )
 }
 export default TodayPage

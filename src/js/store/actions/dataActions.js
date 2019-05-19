@@ -2,13 +2,12 @@
 import firebase from '../firebase'
 import { CLEAR_LOADING, SET_ERROR, SYNC_DATA } from '../types'
 
-export async function loadUserDataAction(state,{ dispatch }) {
+export async function loadUserDataAction(state, { dispatch }) {
     const dbData = await firebase.getUserDoc()
-    console.log('dbdata',dbData)
     const { db, creationTime, displayName, email, lastSignInTime, uid } = dbData
-    const {ui} = state
-    ui.downloadPending= false
-    ui.authenticated= true
+    const { ui } = state
+    ui.downloadPending = false
+    ui.authenticated = true
     const user = {
         creationTime,
         displayName,
@@ -21,7 +20,7 @@ export async function loadUserDataAction(state,{ dispatch }) {
         ...state,
         user,
         db,
-        ui
+        ui,
     }
     dispatch({ type: SYNC_DATA, payload: newState })
 }
@@ -46,6 +45,5 @@ export async function postUserDataAction(state) {
 }
 
 export function syncDataAction(state, payload) {
-
     return payload
 }

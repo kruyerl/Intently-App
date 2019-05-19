@@ -29,11 +29,6 @@ const TasksOrganism = () => (
                 These are the secondary items I must take to stay on top of everything.
             </Text>
             <ActionsContainer>
-                <Action checked />
-                <Action checked />
-                <Action />
-                <Action checked />
-
                 <AddActionForm />
             </ActionsContainer>
         </MaxWidth>

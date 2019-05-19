@@ -1,8 +1,10 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { rgba } from 'polished'
 import Text from '../atoms/Text'
+import AppContext from '../../store/context'
+import { ADD_TASK, ADD_HABIT, ADD_ACTION } from '../../store/types'
 
 const ActionFormButton = styled.button`
     margin: 6px;
@@ -44,15 +46,61 @@ const ActionForm = styled.form`
     margin: 8px 0;
 `
 
-const AddActionForm = ({ value, onClickButton, onChange, onSubmit }) => (
-    <ActionForm noValidate onSubmit={onSubmit}>
-        <ActionFormButton type="submit" onClick={onClickButton}>
-            ✕
-        </ActionFormButton>
-        <ActionFormInput value={value} onChange={onChange} type="text" name="value" id="ActionFormInput" />
-    </ActionForm>
-)
+const AddActionForm = ({ type, objectiveUid }) => {
+    const { state, dispatch } = useContext(AppContext)
+    const [formState, setFormState] = useState({
+        value: '',
+    })
 
-AddActionForm.propTypes = {}
+    function getType(typeOf) {
+        switch (typeOf) {
+            case 'habit':
+                return ADD_HABIT
+            case 'task':
+                return ADD_TASK
+            case 'action':
+                return ADD_ACTION
+            default:
+                break
+        }
+    }
+
+    function onChange(e) {
+        e.preventDefault()
+        setFormState({ value: e.target.value })
+    }
+    function onSubmit(e) {
+        e.preventDefault()
+        const switchedType = getType(type)
+        dispatch({
+            type: switchedType,
+            payload: {
+                value: formState.value,
+                objectiveUid,
+            },
+        })
+        setFormState({ value: '' })
+    }
+
+    return state ? (
+        <ActionForm noValidate onSubmit={onSubmit}>
+            <ActionFormButton type="submit">✕</ActionFormButton>
+            <ActionFormInput
+                value={formState.value}
+                onChange={onChange}
+                type="text"
+                name="value"
+                id="ActionFormInput"
+            />
+        </ActionForm>
+    ) : (
+        <></>
+    )
+}
+
+AddActionForm.propTypes = {
+    type: PropTypes.string.isRequired,
+    objectiveUid: PropTypes.string,
+}
 
 export default AddActionForm

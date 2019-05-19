@@ -11,6 +11,8 @@ const modifier = (prop, props) => {
             return rgba(props.theme.colors.interactive.base, 0.9)
         case 'white':
             return rgba(props.theme.colors.layout.white, 0.9)
+        case 'grey':
+            return rgba(props.theme.colors.layout.black, 0.4)
         case 'warning':
             return rgba(props.theme.colors.denotive.warning, 0.9)
         default:

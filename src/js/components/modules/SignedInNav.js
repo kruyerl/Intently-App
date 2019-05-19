@@ -33,7 +33,7 @@ const SignedInNav = () => {
             </StyledAuth>
             <StyledAuth>
                 <Anchor mod="" tag="navlink" to="/other">
-                    Errands
+                    Other actions
                 </Anchor>
             </StyledAuth>
             <StyledAuth>

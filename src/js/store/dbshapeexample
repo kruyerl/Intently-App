@@ -1,0 +1,36 @@
+objectives: [
+    //objective
+    {
+        uid,
+        category,
+        title:'',
+        why,
+        due,
+        createdAt: Date.now()
+        totalHabits,
+        totalTasks,
+    }
+
+]
+habits: [
+    //habit
+    {
+        uid,
+        objectiveUid,
+        title:'',
+        createdAt: Date.now()
+        complete,
+        lastCompleted,
+    }
+]
+action: [
+    //action
+    {
+        uid,
+        objectiveUid,
+        title:'',
+        createdAt: Date.now()
+        complete,
+        lastCompleted,
+    }
+]

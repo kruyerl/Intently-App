@@ -1,7 +1,9 @@
+import { initialState } from '../initialState'
 //  !UI ACTIONS
 export const setErrorAction = (state, payload) => {
     const { ui } = state
     ui.errors = payload
+    ui.loading = false
     return {
         ...state,
         ui,
@@ -27,24 +29,22 @@ export const setLoadingAction = state => {
 export const clearLoadingAction = state => {
     const { ui } = state
     ui.loading = false
+    ui.errors = null
     return {
         ...state,
         ui,
     }
 }
 export const setAuthenticatedAction = state => {
-    let { authenticated } = state
-    authenticated = true
+    const { authenticated, ui } = state
+    ui.authenticated = true
     return {
         ...state,
-        authenticated,
+        ui,
     }
 }
 export const setUnAuthenticatedAction = state => {
-    let { authenticated } = state
-    authenticated = false
-    return {
-        ...state,
-        authenticated,
-    }
+    const { authenticated, ui } = state
+    ui.authenticated = false
+    return { ...initialState }
 }
