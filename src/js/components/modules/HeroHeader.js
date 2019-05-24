@@ -1,12 +1,18 @@
 import React, { useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { linearGradient } from 'polished'
 import Text from '../atoms/Text'
 
-import background from '../../../assets/img/signupBackground2.png'
-
 const HeroContainer = styled.header`
-    background: url(${props => (props.backgroundImg ? props.backgroundImg : background)});
+    ${'' /* background: url(${props => (props.backgroundImg ? props.backgroundImg : background)}); */}
+    ${props =>
+        linearGradient({
+            colorStops: [`${props.theme.colors.interactive.base} 0%`, `${props.theme.colors.layout.white} 95%`],
+            toDirection: 'to bottom right',
+            fallback: '#FFF',
+        })}
+        background-size: cover;
     background-size: cover;
     background-position: right;
     width: 100%;
@@ -25,7 +31,7 @@ const HeroContainer = styled.header`
     }
 `
 const IntroTextBox = styled.div`
-    margin: 0px 0px 0px 32px;
+    margin: 0px 0px 0px 24px;
 `
 const Heading = styled(Text)`
     ${props => (props.capitalize ? `text-transform: capitalize` : null)}
@@ -34,7 +40,7 @@ const WhiteBlock = styled.div`
     background: ${props => props.theme.colors.layout.white};
     max-width: 600px;
     padding: 24px;
-    padding-left: 32px;
+    padding-left: 24px;
     margin-top: 24px;
     margin-right: 24px;
     width: 100%;
@@ -42,6 +48,7 @@ const WhiteBlock = styled.div`
     @media (max-width: ${props => props.theme.screens.tablet}) {
         margin-right: 0px;
         padding-bottom: 40px;
+        max-width: 100%;
     }
 `
 
@@ -49,10 +56,10 @@ const HeroHeader = ({ backgroundImg, children, h1, h2, capitalize }) => (
     <HeroContainer>
         <span>
             <IntroTextBox>
-                <Heading capitalize={capitalize} tag="h2" mod="black">
+                <Heading capitalize={capitalize} tag="h2" mod="brand">
                     {h1 || 'Welcome back'}
                 </Heading>
-                <Text tag="h1" mod="black">
+                <Text tag="h1" mod="brand">
                     {h2 || 'Todays focus'}
                 </Text>
             </IntroTextBox>

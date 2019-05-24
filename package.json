@@ -4,8 +4,10 @@
   "description": "A Basic React Template",
   "main": "./src/pug/index.pug",
   "scripts": {
-    "dev": "parcel ./src/pug/index.pug",
+    "serve": "parcel ./src/pug/index.pug",
+    "dev": "code . && parcel ./src/pug/index.pug",
     "build": "npm run clean && parcel build ./src/pug/index.pug",
+    "deploy": "npm run build && firebase deploy",
     "lint": "eslint .",
     "clean": "rimraf ./dist/*",
     "lint:fix": "eslint . --fix"

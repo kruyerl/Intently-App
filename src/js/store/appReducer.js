@@ -15,6 +15,8 @@ import {
     LOAD_USERDATA,
     SYNC_DATA,
     POST_DATA,
+    UNDO_DATA,
+    CANCEL_UNDO_DATA,
     SET_NAME,
     ADD_TASK,
     UPDATE_TASK,
@@ -49,7 +51,13 @@ import {
     setUnAuthenticatedAction,
 } from './actions/uiActions'
 
-import { loadUserDataAction, syncDataAction, postUserDataAction } from './actions/dataActions'
+import {
+    loadUserDataAction,
+    syncDataAction,
+    postUserDataAction,
+    undoStateDataAction,
+    cancelUndoStateDataAction,
+} from './actions/dataActions'
 
 import { addTaskAction, updateTaskAction, deleteTaskAction, reorderTaskAction } from './actions/taskActions'
 
@@ -133,14 +141,17 @@ const appReducer = (state, { type, payload }) => {
 
         //  ?DATA
 
+        case UNDO_DATA:
+            return undoStateDataAction(state)
+        case CANCEL_UNDO_DATA:
+            return cancelUndoStateDataAction(state)
         case LOAD_USERDATA:
             loadUserDataAction(state, payload)
             return state
         case SYNC_DATA:
             return syncDataAction(state, payload)
         case POST_DATA:
-            postUserDataAction(state)
-            return state
+            return postUserDataAction(state)
         case SET_NAME: {
             const { user } = state
             user.displayName = payload.name

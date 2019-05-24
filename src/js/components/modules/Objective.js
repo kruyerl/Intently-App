@@ -6,6 +6,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import Text from '../atoms/Text'
 import Button from '../atoms/Button'
 import Action from './Action'
+import NonDragAction from './NonDragAction'
 import AddActionForm from './AddActionForm'
 import AppContext from '../../store/context'
 import { DELETE_OBJECTIVE, REORDER_ACTION } from '../../store/types'
@@ -14,7 +15,7 @@ const Container = styled.section`
     background: ${props => props.theme.colors.layout.grey};
 `
 const MaxWidth = styled.div`
-    padding: 54px 24px;
+    padding: 32px 24px;
     max-width: ${props => props.theme.screens.desktop};
     margin: 0 auto;
     display: flex;
@@ -39,6 +40,10 @@ const ActionBox = styled.div`
     display: grid;
     grid-gap: 0px 8px;
     grid-template-columns: 1fr 1fr;
+    @media (max-width: ${props => props.theme.screens.tablet}) {
+        display: flex;
+        flex-direction: column;
+    }
 `
 const ActionsContainer = styled.ul`
     background: ${props => props.theme.colors.layout.white};
@@ -67,7 +72,6 @@ const Objective = ({ obj }) => {
     }
 
     const onDragEnd = result => {
-        console.log('dropped', result)
         const { destination, source, draggableId } = result
         if (!destination) {
             return
@@ -87,7 +91,7 @@ const Objective = ({ obj }) => {
         objectivesActions.splice(destination.index, 0, actionToMove)
 
         const allActionsOrder = [...objectivesActions, ...otherObjectivesActions]
-        console.log('allActionsOrder', allActionsOrder)
+
         dispatch({
             type: REORDER_ACTION,
             payload: allActionsOrder,
@@ -101,7 +105,9 @@ const Objective = ({ obj }) => {
             <MaxWidth>
                 <Text tag="h3">Regarding my {obj.category}</Text>
                 <Text tag="h2">{`I will ${obj.title} by the ${moment(obj.due).format('Do [of] MMMM')}`}</Text>
-                <Text tag="p">This matters to me because {obj.why}</Text>
+                <Text tag="p">
+                    <strong>This matters to me because {obj.why}</strong>
+                </Text>
                 <Stats>
                     <Text tag="small">
                         Objective created <strong>{moment({ hours: 0 }).diff(obj.createdAt, 'days') * -1}</strong> days
@@ -124,7 +130,7 @@ const Objective = ({ obj }) => {
                     {habits &&
                         habits
                             .filter(habit => habit.objective === obj.uid)
-                            .map(habit => <Action key={habit.uid} type="habit" obj={habit} edit />)}
+                            .map(habit => <NonDragAction key={habit.uid} type="habit" obj={habit} edit />)}
                     {habits && countHabits() < 2 ? <AddActionForm type="habit" objectiveUid={obj.uid} /> : null}
                 </ActionBox>
 

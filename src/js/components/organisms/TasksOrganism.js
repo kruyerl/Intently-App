@@ -11,7 +11,7 @@ const Container = styled.section`
     background: ${props => props.theme.colors.layout.white};
 `
 const MaxWidth = styled.div`
-    padding: 54px 24px;
+    padding: 32px 24px;
     max-width: ${props => props.theme.screens.desktop};
     margin: 0 auto;
 `

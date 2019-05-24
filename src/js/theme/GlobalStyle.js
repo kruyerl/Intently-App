@@ -46,6 +46,7 @@ img::selection{
 body{
  background-color: ${props => props.theme.colors.layout.white};
  font-size: 16px;
+ height: 100%;
 }
 * {
     box-sizing: border-box;

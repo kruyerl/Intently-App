@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Text from '../atoms/Text'
 import Button from '../atoms/Button'
+import Anchor from '../atoms/Anchor'
 import NonDragAction from '../modules/NonDragAction'
 import HeroHeader from '../modules/HeroHeader'
 import QuoteBar from '../modules/QuoteBar'
@@ -11,18 +12,19 @@ import Commitments from '../organisms/Commitments'
 import FooterCTA from '../organisms/FooterCTA'
 import Tasks from '../organisms/Tasks'
 import AppContext from '../../store/context'
+import { GrandLoader } from '../modules/Loader'
 
 const StyledButton = styled(Button)`
     margin-right: 16px;
 `
 const StyledButtonContainer = styled.div`
-    margin-bottom: 30px;
+    margin-bottom: 24px;
 `
 
 const ActionsContainer = styled.ul`
     padding: 0px;
     margin: 0px;
-    margin-top: 30px;
+    margin-top: 24px;
     max-width: ${props => props.theme.screens.tablet};
 `
 
@@ -45,22 +47,23 @@ const TodayPage = () => {
 
     return state && state.ui.authenticated === true ? (
         <>
-            <HeroHeader capitalize h1={state.user !== undefined && `Welcome ${displayName}`}>
-                <Text tag="h3" mod="black">
+            <HeroHeader capitalize h1={state.user !== undefined && `Welcome ${displayName || ''}`}>
+                <Text tag="h3" mod="brand">
                     Work on your objectives:
                 </Text>
                 <ActionsContainer>
-                    {actions &&
+                    {objectives &&
                         pickTopActionItems(objectives, actions).map(action => (
                             <NonDragAction key={action.uid} type="action" obj={action} />
                         ))}
-                    {actions && actions.length === 0 ? (
+                    {objectives && actions.length < 1 ? (
                         <>
-                            <Text tag="p" mod="brand">
+                            <Text tag="p" mod="black">
                                 The next actions of each of your objectives show up here everyday
                             </Text>
-                            <br />
-                            <Button mod="interactive">Set an objective</Button>
+                            <Anchor tag="link" to="/objectives">
+                                <Button mod="brand">Set an objective</Button>
+                            </Anchor>
                         </>
                     ) : null}
                 </ActionsContainer>
@@ -68,23 +71,19 @@ const TodayPage = () => {
             <Commitments />
             <Tasks number={4} />
             <FooterCTA
-                heading="Did you do your best today to serve yourself, my friends, family & your community"
-                subheading="If not, make sure to do better tomorrow"
+                heading="Do your best today to serve yourself, your friends, family & your community"
+                subheading="Let's debrief & review the day."
             >
                 <StyledButtonContainer>
-                    <StyledButton mod="interactive" active>
-                        I did my best
+                    <StyledButton mod="brand" active>
+                        Review the day
                     </StyledButton>
                 </StyledButtonContainer>
             </FooterCTA>
+            <QuoteBar />
         </>
     ) : (
-        <div>
-            <br />
-            <br />
-            <br />
-            <h1>Loading</h1>
-        </div>
+        <GrandLoader />
     )
 }
 export default TodayPage

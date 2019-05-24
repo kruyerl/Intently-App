@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Text from '../atoms/Text'
+import Anchor from '../atoms/Anchor'
 import Button from '../atoms/Button'
 import NonDragAction from '../modules/NonDragAction'
 import AppContext from '../../store/context'
@@ -10,7 +11,7 @@ const Container = styled.section`
     background: ${props => props.theme.colors.layout.grey};
 `
 const MaxWidth = styled.div`
-    padding: 54px 24px;
+    padding: 32px 24px;
     max-width: ${props => props.theme.screens.desktop};
     margin: 0 auto;
 `
@@ -28,8 +29,8 @@ const Commitments = () => {
     return state ? (
         <Container>
             <MaxWidth>
-                <Text tag="h3" mod="black">
-                    Daily commitments:
+                <Text tag="h3" mod="brand">
+                    Foster good habits:
                 </Text>
                 <ActionsContainer>
                     {habits && habits.map(habit => <NonDragAction key={habit.uid} type="habit" obj={habit} />)}
@@ -39,8 +40,9 @@ const Commitments = () => {
                         <Text tag="p" mod="black">
                             The next habits of each of your objectives show up here everyday
                         </Text>
-                        <br />
-                        <Button mod="white">Set an objective</Button>
+                        <Anchor tag="link" mod="interactive" to="/objectives">
+                            Set an objective
+                        </Anchor>
                     </>
                 ) : null}
             </MaxWidth>

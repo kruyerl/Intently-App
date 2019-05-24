@@ -6,7 +6,7 @@ import AppContext from '../../store/context'
 import Text from '../atoms/Text'
 
 const StyledBar = styled.article`
-    background-color: ${props => props.theme.colors.interactive.light};
+    background-color: ${props => props.theme.colors.brand.base};
     padding: 32px;
     display: flex;
     justify-content: center;

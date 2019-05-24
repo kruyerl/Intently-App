@@ -1,22 +1,30 @@
 import React, { useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { linearGradient } from 'polished'
 import Text from '../atoms/Text'
 
-import background from '../../../assets/img/signupBackground2.png'
 
 const HeroContainer = styled.header`
-    background: url(${props => (props.backgroundImg ? props.backgroundImg : background)});
-    background-size: cover;
+    ${'' /* background: url(${props => (props.backgroundImg ? props.backgroundImg : background)}); */}
+    ${props =>
+        linearGradient({
+            colorStops: [`${props.theme.colors.interactive.base} 0%`, `${props.theme.colors.layout.white} 95%`],
+            toDirection: 'to bottom right',
+            fallback: '#FFF',
+        })}
+        background-size: cover;
     background-position: center;
     width: 100%;
 
-    padding: 120px 0px 60px 0px;
-
+    padding: 100px 0px 3 0px 0px;
+    @media (max-width: ${props => props.theme.screens.mobile}) {
+        ${'' /* background: none; */}
+    }
     span {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: flex-start;
         margin: 0 auto;
         max-width: ${props => props.theme.screens.desktop};
@@ -24,7 +32,7 @@ const HeroContainer = styled.header`
     }
 `
 const IntroTextBox = styled.div`
-    margin: 0px 0px 0px 32px;
+    margin: 24px;
 `
 const Heading = styled(Text)`
     ${props => (props.capitalize ? `text-transform: capitalize` : null)}

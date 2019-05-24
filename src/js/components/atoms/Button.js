@@ -35,6 +35,16 @@ const modifier = ({ mod, theme }) => {
                 }
 
             `
+        case 'invisible':
+            return `
+                color: ${theme.colors.layout.brand};
+                background: ${rgba(theme.colors.layout.grey, 0)};
+                &:hover{
+                    background: ${rgba(theme.colors.layout.grey, 0.5)};
+
+                }
+
+            `
         case 'white':
             return `
                 color: ${theme.colors.brand.base};
@@ -65,13 +75,16 @@ const StyledButton = styled.button`
     white-space: nowrap;
     ${props => modifier(props)}
     ${props => (props.z ? props.theme.shadows.z1 : null)}
-
     cursor: pointer;
+
     &:hover {
         ${props => (props.unactive ? null : props.theme.shadows.z3)};
     }
     &:focus {
         outline: none;
+    }
+    @media (max-width: ${props => props.theme.screens.mobile}) {
+        width: 100%;
     }
 `
 

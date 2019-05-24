@@ -30,9 +30,14 @@ export const addObjectiveAction = (state, { value }) => {
 }
 export const deleteObjectiveAction = (state, payload) => {
     const { db, ui } = state
-
     const updatedObjects = db.objectives.filter(obj => obj.uid !== payload)
+    const updatedActions = db.actions.filter(act => act.objective !== payload)
+    const updatedHabits = db.habits.filter(hab => hab.objective !== payload)
+
     db.objectives = updatedObjects
+    db.actions = updatedActions
+    db.habits = updatedHabits
+
     ui.loading = false
     ui.syncPending = true
     return {

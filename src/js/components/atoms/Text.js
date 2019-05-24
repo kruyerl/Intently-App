@@ -16,7 +16,7 @@ const modifier = (prop, props) => {
         case 'warning':
             return rgba(props.theme.colors.denotive.warning, 0.9)
         default:
-            return rgba(props.theme.colors.layout.black, 0.9)
+            return rgba(props.theme.colors.brand.base, 0.9)
     }
 }
 
@@ -46,7 +46,7 @@ const H1 = styled.h1`
 const H2 = styled.h2`
     font-family: ${props => props.theme.fonts.headings.secondary};
     font-size: 2.5em;
-    font-weight: 300;
+    font-weight: 600;
     line-height: 1.2;
     margin: 0px 0px 12px 0px;
     color: ${props => modifier(props.mod, props)};
@@ -66,7 +66,7 @@ const H3 = styled.h3`
 const H4 = styled.h4`
     font-family: ${props => props.theme.fonts.headings.secondary};
     font-size: 1.4em;
-    font-weight: 300;
+    font-weight: 600;
     line-height: 1.6;
     margin: 0px 0px 12px 0px;
     color: ${props => modifier(props.mod, props)};
@@ -80,6 +80,7 @@ const P = styled.p`
     margin: 0px 0px 16px 0px;
     color: ${props => modifier(props.mod, props)};
     max-width: 600px;
+
     ${props => alignModifier(props.align)};
     strong {
         font-weight: 500;
@@ -87,7 +88,7 @@ const P = styled.p`
 `
 const Small = styled.small`
     font-family: ${props => props.theme.fonts.headings.primary};
-    font-size: 0.8em;
+    font-size: 0.9em;
     line-height: 1.5;
     margin: 0px 0px 12px 0px;
     color: ${props => modifier(props.mod, props)};

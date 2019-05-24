@@ -6,18 +6,19 @@ import AppContext from '../../store/context'
 import { ADD_TASK, ADD_HABIT, ADD_ACTION } from '../../store/types'
 
 const ActionFormButton = styled.button`
-    margin: 6px;
-    border: 0px;
-    transform: rotate(45deg);
-    font-weight: bolder;
-    height: 26px;
-    width: 26px;
     border-radius: 50%;
-    background-color: ${props => props.theme.colors.layout.grey};
-    color: ${props => props.theme.colors.interactive.base};
+    height: 36px;
+    width: 40px;
+    border: 1px solid ${props => rgba(props.theme.colors.interactive.dark, 0.2)};
+    color: ${props => props.theme.colors.layout.white};
+    background-color: ${props => props.theme.colors.brand.base};
+    ${props => props.theme.shadows.z2};
+    padding: 0px;
+    margin-right: 8px;
+    margin-left: 2px;
     outline: none;
-    margin-right: 12px;
     &:hover {
+        background-color: ${props => props.theme.colors.interactive.base};
         ${props => props.theme.shadows.active};
         transition: all 300ms ease-in-out;
     }
@@ -28,6 +29,7 @@ const ActionFormInput = styled.input`
     padding: 8px 0;
     background: transparent;
     border: 0px;
+    border-radius: 0px;
     border-bottom: 1px solid ${props => rgba(props.theme.colors.layout.black, 0.2)};
     transition: all 300ms ease-in-out;
 
@@ -42,7 +44,7 @@ const ActionForm = styled.form`
     max-width: 300px;
     display: flex;
     flex-direction: row;
-    margin: 8px 0;
+    margin: 16px 0 8px 0;
 `
 
 const AddActionForm = ({ type, objectiveUid }) => {
@@ -83,13 +85,16 @@ const AddActionForm = ({ type, objectiveUid }) => {
 
     return state ? (
         <ActionForm noValidate onSubmit={onSubmit}>
-            <ActionFormButton type="submit">✕</ActionFormButton>
+            <ActionFormButton type="submit">
+                <i className="material-icons">add</i>
+            </ActionFormButton>
             <ActionFormInput
                 value={formState.value}
                 onChange={onChange}
                 type="text"
                 name="value"
                 id="ActionFormInput"
+                placeholder={`Add new ${type}`}
             />
         </ActionForm>
     ) : (

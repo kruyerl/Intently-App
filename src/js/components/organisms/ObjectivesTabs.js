@@ -1,26 +1,44 @@
-import React, { useEffect, useContext } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Text from '../atoms/Text'
-import Button from '../atoms/Button'
 import Anchor from '../atoms/Anchor'
-import img from '../../../assets/img/home1.png'
 
 const Container = styled.section`
     background: ${props => props.theme.colors.layout.white};
 `
 const MaxWidth = styled.div`
-    padding: 54px 24px;
+    padding: 32px 24px;
     max-width: ${props => props.theme.screens.desktop};
     margin: 0 auto;
 `
 const LinkContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    margin-bottom: 8px;
+    margin-top: 16px;
+    @media (max-width: ${props => props.theme.screens.tablet}) {
+        font-size: 24px;
+
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
 `
 const CategoryA = styled(Anchor)`
     margin: 0px;
 `
+const CategoryLink = styled(Text)`
+    margin-right: 24px;
+    &:hover {
+        transition: all 600ms ease;
+        color: ${props => props.theme.colors.brand.base};
+    }
+    @media (max-width: ${props => props.theme.screens.tablet}) {
+        margin: 8px 16px;
+        font-size: 24px;
+    }
+`
+
 const ObjectivesTabs = ({ match, history }) => {
     if (match.params.id === undefined) {
         history.push('/objectives/condition')
@@ -46,28 +64,30 @@ const ObjectivesTabs = ({ match, history }) => {
     return (
         <Container>
             <MaxWidth>
-                <Text tag="h4" mod="brand">How are you showing up in these key areas:</Text>
+                <Text tag="h4" mod="brand">
+                    How are you showing up in these key areas:
+                </Text>
                 <LinkContainer>
                     <CategoryA tag="navlink" to="/objectives/condition">
-                        <Text mod={match.params.id === 'condition' ? 'interactive' : 'grey'} tag="h3">
+                        <CategoryLink mod={match.params.id === 'condition' ? 'interactive' : 'grey'} tag="h3">
                             Condition
-                        </Text>
+                        </CategoryLink>
                     </CategoryA>
 
                     <CategoryA tag="navlink" to="/objectives/calibration">
-                        <Text mod={match.params.id === 'calibration' ? 'interactive' : 'grey'} tag="h3">
+                        <CategoryLink mod={match.params.id === 'calibration' ? 'interactive' : 'grey'} tag="h3">
                             Calibration
-                        </Text>
+                        </CategoryLink>
                     </CategoryA>
                     <CategoryA tag="navlink" to="/objectives/connection">
-                        <Text mod={match.params.id === 'connection' ? 'interactive' : 'grey'} tag="h3">
+                        <CategoryLink mod={match.params.id === 'connection' ? 'interactive' : 'grey'} tag="h3">
                             Connection
-                        </Text>
+                        </CategoryLink>
                     </CategoryA>
                     <CategoryA tag="navlink" to="/objectives/contribution">
-                        <Text mod={match.params.id === 'contribution' ? 'interactive' : 'grey'} tag="h3">
+                        <CategoryLink mod={match.params.id === 'contribution' ? 'interactive' : 'grey'} tag="h3">
                             Contribution
-                        </Text>
+                        </CategoryLink>
                     </CategoryA>
                 </LinkContainer>
                 <Text tag="p">{getWriteUp(match.params.id)}</Text>

@@ -5,7 +5,12 @@ import Text from '../atoms/Text'
 import Button from '../atoms/Button'
 import Anchor from '../atoms/Anchor'
 import HeroHeader from '../modules/HeroHeader'
-import img from '../../../assets/img/home1.png'
+import img from '../../../assets/img/family.png'
+import family from '../../../assets/img/family.png'
+import thevision from '../../../assets/img/thevision.png'
+import theaction from '../../../assets/img/theaction.png'
+import setObjectives from '../../../assets/img/setObjectives.png'
+import lost from '../../../assets/img/lost.png'
 import TextWithImage from '../modules/TextWithImage'
 
 const MaxWidth = styled.section`
@@ -89,7 +94,9 @@ const Cta = styled.section`
     align-items: center;
     margin: 50px 24px 80px 24px;
 `
-
+const CTAButtons = styled(Button)`
+    margin-top: 16px;
+`
 const LandingPage = ({ history }) => {
     const handleClick = e => {
         history.push(`/${e.target.name}`)
@@ -99,30 +106,30 @@ const LandingPage = ({ history }) => {
             <Header>
                 <section>
                     <div>
-                        <Text tag="h2">Do Less</Text>
-                        <Text tag="h1">Achieve more</Text>
+                        <Text tag="h2">Life is precious</Text>
+                        <Text tag="h1">Be intentional with how you live yours</Text>
                         <Text tag="p">
-                            Life can feel overwhelming, but it doesn’t have to. Todoist lets you keep track of
+                            Life can feel overwhelming, but it doesn’t have to. Intentlyds lets you keep track of
                             everything in one place, so you can get it all done and enjoy more peace of mind along the
                             way.
                         </Text>
 
-                        <Button mod="interactive" onClick={handleClick} name="login">
+                        <CTAButtons mod="interactive" onClick={handleClick} name="login">
                             Begin your journey
-                        </Button>
+                        </CTAButtons>
                     </div>
-                    <img src={img} alt="" />
+                    <img src={family} alt="" />
                 </section>
             </Header>
             <TextWithImage>
-                <img src={img} alt="" />
+                <img src={lost} alt="" />
                 <div>
                     <Text tag="h3">
                         Never feel lost again, <br /> Find purpose in action
                     </Text>
                     <Text tag="p">
-                        Life can feel overwhelming, but it doesn’t have to. Todoist lets you keep track of everything in
-                        one place, so you can get it all done and enjoy more peace of mind along the way.
+                        Life can feel overwhelming, but it doesn’t have to. Intentlyds lets you keep track of everything
+                        in one place, so you can get it all done and enjoy more peace of mind along the way.
                     </Text>
                     <Anchor tag="link" to="/" mod="interactive">
                         See how we change lives
@@ -132,32 +139,32 @@ const LandingPage = ({ history }) => {
             <MaxWidth>
                 <Text tag="h3">
                     Take back your life. <br />
-                    Focus on what matters
+                    Focus on what matters to you
                 </Text>
                 <Text tag="p">
-                    Life can feel overwhelming, but it doesn’t have to. Todoist lets you keep track of everything in one
-                    place, so you can get it all done and enjoy more peace of mind along the way.
+                    Life can feel overwhelming, but it doesn’t have to. Intentlyds lets you keep track of everything in
+                    one place, so you can get it all done and enjoy more peace of mind along the way.
                 </Text>
                 <ThreeColumn>
                     <article>
-                        <img src={img} alt="" />
-                        <Text tag="h4">Imagine your future</Text>
+                        <img src={thevision} alt="" />
+                        <Text tag="h4">Visualise your future</Text>
                     </article>
                     <article>
-                        <img src={img} alt="" />
-                        <Text tag="h4">Set your objectives.</Text>
+                        <img src={setObjectives} alt="" />
+                        <Text tag="h4">Setup your objectives</Text>
                     </article>
                     <article>
-                        <img src={img} alt="" />
-                        <Text tag="h4">Take action with intention</Text>
+                        <img src={theaction} alt="" />
+                        <Text tag="h4">Take simple action daily </Text>
                     </article>
                 </ThreeColumn>
             </MaxWidth>
             <Cta>
                 <Text tag="h3">Know your path & walk it with Intently</Text>
-                <Button mod="interactive" onClick={handleClick} name="login">
+                <CTAButtons mod="interactive" onClick={handleClick} name="login">
                     Begin your journey
-                </Button>
+                </CTAButtons>
             </Cta>
         </>
     )

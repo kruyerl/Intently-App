@@ -3,6 +3,8 @@ export const LOAD_USERDATA = 'LOAD_USERDATA'
 export const SYNC_DATA = 'SYNC_DATA'
 export const POST_DATA = 'POST_DATA'
 export const SET_NAME = 'SET_NAME'
+export const UNDO_DATA = 'UNDO_DATA'
+export const CANCEL_UNDO_DATA = 'CANCEL_UNDO_DATA'
 
 //* User Types
 export const SET_AUTHENTICATED = 'SET_AUTHENTICATED'

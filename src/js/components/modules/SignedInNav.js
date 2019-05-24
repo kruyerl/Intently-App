@@ -7,6 +7,14 @@ import { LOGOUT_USER } from '../../store/types'
 
 const StyledAuth = styled.li`
     margin-left: 16px;
+    line-height: 0.9;
+`
+const StyledAnchor = styled(Anchor)`
+    margin: 0px;
+    line-height: 1;
+`
+const Icon = styled.i`
+    line-height: 0.95;
 `
 const SignedInNav = () => {
     const { dispatch } = useContext(AppContext)
@@ -32,14 +40,14 @@ const SignedInNav = () => {
                 </Anchor>
             </StyledAuth>
             <StyledAuth>
-                <Anchor mod="" tag="navlink" to="/other">
-                    Other actions
+                <Anchor mod="" tag="navlink" to="/tasks">
+                    Tasks
                 </Anchor>
             </StyledAuth>
             <StyledAuth>
-                <Anchor mod="" tag="link" to="/" onClick={handleLogout}>
-                    Sign out
-                </Anchor>
+                <StyledAnchor mod="" tag="link" to="/" onClick={handleLogout}>
+                    <Icon className="material-icons">exit_to_app</Icon>
+                </StyledAnchor>
             </StyledAuth>
         </>
     )

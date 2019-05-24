@@ -9,24 +9,24 @@ import ObjectivesTabs from '../organisms/ObjectivesTabs'
 import ObjectivesContainer from '../organisms/ObjectivesContainer'
 import NoObjective from '../modules/NoObjective'
 import Objective from '../modules/Objective'
+import { GrandLoader } from '../modules/Loader'
 
 const ObjectivesPage = props => {
     const { state, dispatch } = useContext(AppContext)
 
     return state && state.ui.authenticated === true ? (
         <>
-            <SidekickHeader textMain="Main Objectives" textSub="Whether you’re planning out your next career project, your fitness goals, or your new business, we'd love to help you be intentional about it." />
+            <SidekickHeader
+                textMain="Main Objectives"
+                textSub="Whether you’re planning out your next career project, your fitness goals, or your new business, we'd love to help you be intentional about it."
+            />
             {/* <QuoteBar /> */}
             <ObjectivesTabs {...props} />
             <ObjectivesContainer {...props} />
+            <QuoteBar />
         </>
     ) : (
-        <div>
-            <br />
-            <br />
-            <br />
-            <h1>Loading</h1>
-        </div>
+        <GrandLoader />
     )
 }
 

@@ -8,6 +8,7 @@ import Button from '../atoms/Button'
 import { Input, Label } from '../atoms/Form'
 import AppContext from '../../store/context'
 import { SET_LOADING, CLEAR_LOADING, CLEAR_ERROR, SET_ERROR, LOGIN_USER } from '../../store/types'
+import { Loader } from '../modules/Loader'
 
 const StyledButtons = styled(Button)`
     width: 100%;
@@ -97,12 +98,7 @@ const AuthSignIn = ({ history }) => {
     }
     const isLoading = () => {
         try {
-            if (context.state.ui.loading)
-                return (
-                    <Warning tag="p" align="center" mod="brand">
-                        Loading...
-                    </Warning>
-                )
+            if (context.state.ui.loading) return <Loader tag="p" align="center" />
         } catch (error) {
             return null
         }

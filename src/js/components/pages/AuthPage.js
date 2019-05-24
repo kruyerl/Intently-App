@@ -1,22 +1,28 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import { linearGradient } from 'polished'
 import AuthModule from '../modules/AuthModule'
 import Text from '../atoms/Text'
 import Button from '../atoms/Button'
-import Background from '../../../assets/img/signupBackground.png'
 import AuthSignIn from '../organisms/AuthSignIn'
 import AuthSignUp from '../organisms/AuthSignUp'
 
 const StyledAuth = styled.div`
-    background-color: ${props => props.theme.colors.layout.grey};
-    background-image: url(${Background});
+    ${'' /* background: url(${props => (props.backgroundImg ? props.backgroundImg : background)}); */}
+    ${props =>
+        linearGradient({
+            colorStops: [`${props.theme.colors.interactive.base} 0%`, `${props.theme.colors.layout.white} 95%`],
+            toDirection: 'to bottom right',
+            fallback: '#FFF',
+        })}
+        background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 
     span {
-        min-height: 100%;
+        min-height: 100vh;
         padding: 100px 32px 16px 32px;
         max-width: ${props => props.theme.screens.desktop};
         margin: auto;

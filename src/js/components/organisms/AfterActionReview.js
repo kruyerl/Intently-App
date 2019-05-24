@@ -16,8 +16,6 @@ const MaxWidth = styled.div`
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;
-    position: relative;
-    min-height: 432px;
 `
 const ActionsContainer = styled.ul`
     padding: 0px;
@@ -25,19 +23,9 @@ const ActionsContainer = styled.ul`
     margin-top: 30px;
     max-width: ${props => props.theme.screens.tablet};
 `
-const Content = styled.div`
-    z-index: 10;
-`
 
 const StyledImgContainer = styled.div`
     margin: 0 0 0 auto;
-    position: absolute;
-    top: 100px;
-    right: 40px;
-    z-index: 0;
-    @media (max-width: ${props => props.theme.screens.tablet}) {
-        position: initial;
-    }
 `
 const StyledImg = styled.img`
     max-width: 400px;
@@ -47,7 +35,7 @@ const StyledImg = styled.img`
 const FooterCTA = ({ children, heading, subheading }) => (
     <Container>
         <MaxWidth>
-            <Content>
+            <div>
                 <Text tag="h3" mod="brand">
                     {heading || ''}
                 </Text>
@@ -57,7 +45,7 @@ const FooterCTA = ({ children, heading, subheading }) => (
                     </Text>
                 )}
                 {children}
-            </Content>
+            </div>
             <StyledImgContainer>
                 <StyledImg src={img} alt="" />
             </StyledImgContainer>

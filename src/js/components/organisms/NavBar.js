@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { useAuthState } from 'react-firebase-hooks/auth'
@@ -14,7 +13,7 @@ const Nav = styled.nav`
     top: 0px;
     left: 0px;
     right: 0px;
-    padding: 16px;
+    padding: 16px 24px;
     ${props => props.theme.shadows.z1};
     z-index: 100;
     span {
@@ -34,6 +33,14 @@ const Nav = styled.nav`
         pointer-events: none;
     }
 `
+const Logo = styled(Link)`
+    max-width: 100%;
+    transition: all 300ms ease-in-out;
+    @media (max-width: ${props => props.theme.screens.mobile}) {
+        max-width: 24px;
+        overflow: hidden;
+    }
+`
 
 //! Component:
 const NavBar = () => {
@@ -49,15 +56,13 @@ const NavBar = () => {
     return (
         <Nav>
             <span>
-                <Link to="/">
+                <Logo to="/">
                     <img src={LogoPic} alt="Logo for Intently" />
-                </Link>
+                </Logo>
                 <ul>{isAuth()}</ul>
             </span>
         </Nav>
     )
 }
-
-NavBar.propTypes = {}
 
 export default NavBar

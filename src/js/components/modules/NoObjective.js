@@ -5,16 +5,17 @@ import styled from 'styled-components'
 import { validateObjective } from '../../utilities/validators'
 import Text from '../atoms/Text'
 import Button from '../atoms/Button'
-import { Input, TextArea, Label } from '../atoms/Form'
+import { Input, TextArea, Label, Range } from '../atoms/Form'
 import img from '../../../assets/img/home1.png'
 import AppContext from '../../store/context'
+import { Loader } from './Loader'
 import { ADD_OBJECTIVE, SET_ERROR, CLEAR_ERROR } from '../../store/types'
 
 const Container = styled.section`
     background: ${props => props.theme.colors.layout.grey};
 `
 const MaxWidth = styled.div`
-    padding: 54px 24px;
+    padding: 32px 24px;
     max-width: ${props => props.theme.screens.desktop};
     margin: 0 auto;
     display: flex;
@@ -48,7 +49,7 @@ const StyledFormElements = styled.div`
     ${props => (props.formIsOpen ? 'max-height: 600px' : null)}
 `
 const Labels = styled(Label)`
-    margin-bottom: 8px;
+    margin-bottom: 24px;
 `
 const Warning = styled(Text)`
     margin: 0px;
@@ -61,10 +62,20 @@ const Status = styled.div`
     justify-content: center;
     align-items: center;
 `
+const RangeContainer = styled.div`
+    display: flex;
+    align-items: center;
+    p {
+        margin: 0px;
+        margin-right: 16px;
+    }
+    input {
+        width: 100%;
+    }
+`
 
 const NoObjective = ({ match }) => {
     const context = useContext(AppContext)
-console.log('match',match.params.id)
     const initialState = {
         category: match.params.id,
         title: '',
@@ -72,13 +83,14 @@ console.log('match',match.params.id)
         due: 12,
         formIsOpen: false,
     }
+
     const [state, setState] = useState(initialState)
 
     useEffect(
         () => () => {
-                context.dispatch({
-                    type: CLEAR_ERROR,
-                })
+            context.dispatch({
+                type: CLEAR_ERROR,
+            })
         },
         []
     )
@@ -145,12 +157,7 @@ console.log('match',match.params.id)
     }
     const isLoading = () => {
         try {
-            if (context.state.ui.loading)
-                return (
-                    <Warning tag="p" align="center" mod="brand">
-                        Loading...
-                    </Warning>
-                )
+            if (context.state.ui.loading) return <Loader align="center" />
         } catch (error) {
             return null
         }
@@ -161,7 +168,7 @@ console.log('match',match.params.id)
             <MaxWidth>
                 <ContentBox>
                     <Text tag="h4">
-                        {state && state.formIsOpen ? `Great! Let's Begin` : "No objective? All finished?"}
+                        {state && state.formIsOpen ? `Great! Let's Begin` : 'No objective? All finished?'}
                     </Text>
                     <Text tag="h3">
                         {state && state.formIsOpen
@@ -184,17 +191,24 @@ console.log('match',match.params.id)
                             </Labels>
                             <Labels>
                                 <Text tag="p">How many weeks would this take?</Text>
-                                <Input
-                                    type="number"
-                                    placeholder="12"
-                                    value={state.due}
-                                    name="due"
-                                    onChange={handleChange}
-                                />
                                 {isError('due', 'right')}
+
+                                <RangeContainer>
+                                    <Text tag="p">{state.due}</Text>
+
+                                    <Range
+                                        type="range"
+                                        placeholder="12"
+                                        value={state.due}
+                                        name="due"
+                                        min="0"
+                                        max="12"
+                                        onChange={handleChange}
+                                    />
+                                </RangeContainer>
                             </Labels>
                             <Labels>
-                                <Text tag="p">This matters to you because?</Text>
+                                <Text tag="p">Why does this matter to you?</Text>
                                 <TextArea
                                     type="text"
                                     placeholder="This matters to me because..."
@@ -213,7 +227,7 @@ console.log('match',match.params.id)
                             {state && state.formIsOpen ? 'Submit new objective' : 'Create a new objective'}
                         </StyledButtons>
                         {state.formIsOpen && (
-                            <StyledButtons mod="grey" onClick={handleClose} unactive>
+                            <StyledButtons mod="invisible" onClick={handleClose} unactive>
                                 Nevermind
                             </StyledButtons>
                         )}

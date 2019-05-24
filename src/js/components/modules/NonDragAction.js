@@ -2,12 +2,13 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { rgba } from 'polished'
+import moment from 'moment'
 import Text from '../atoms/Text'
 import AppContext from '../../store/context'
 import { UPDATE_TASK, DELETE_TASK, UPDATE_HABIT, DELETE_HABIT, UPDATE_ACTION, DELETE_ACTION } from '../../store/types'
 
 const Container = styled.section`
-    padding: 8px;
+    padding: 8px 4px;
     background: ${props => rgba(props.theme.colors.brand.base, 0)};
     border-top: 1px solid ${props => rgba(props.theme.colors.layout.grey, 0.5)};
     border-bottom: 1px solid ${props => rgba(props.theme.colors.layout.grey, 0.5)};
@@ -78,7 +79,7 @@ const Checkbox = styled.div`
         `}
 `
 const Description = styled(Text)`
-    margin: 0px 16px;
+    margin: 0px 8px;
     flex: 1;
     transition: all 300ms cubic-bezier(0.66, 0.01, 0.43, 1.01);
     ${props =>
@@ -127,6 +128,9 @@ const NonDragAction = ({ type, obj, edit }) => {
         const updateType = getType(type)
         const itemToCheck = db[`${type}s`].filter(item => item.uid === obj.uid)[0]
         itemToCheck.complete = !itemToCheck.complete
+        if (itemToCheck.complete) {
+            itemToCheck.lastCompleted = moment().format()
+        }
         dispatch({
             type: updateType,
             payload: {
@@ -149,7 +153,7 @@ const NonDragAction = ({ type, obj, edit }) => {
             <Task onClick={handleCheck}>
                 <Checkbox checked={obj.complete} />
 
-                <Description tag="p" checked={obj.complete}>
+                <Description tag="small" checked={obj.complete}>
                     {obj.body && obj.body}
                 </Description>
             </Task>
@@ -160,9 +164,6 @@ const NonDragAction = ({ type, obj, edit }) => {
                     </li>
                     <li>
                         <Tool onClick={handleDelete}>×</Tool>
-                    </li>
-                    <li>
-                        <Tool>↕</Tool>
                     </li>
                 </Tools>
             )}

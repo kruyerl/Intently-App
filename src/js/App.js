@@ -13,16 +13,20 @@ import Styles from './components/pages/Styles'
 import TodayPage from './components/pages/TodayPage'
 import NotFoundPage from './components/pages/NotFoundPage'
 import AppContext from './store/context'
-import QuoteBar from './components/modules/QuoteBar'
 import { LOAD_USERDATA, POST_DATA } from './store/types'
+import { useSync } from './utilities/sync'
+import ScrollToTop from './utilities/ScrollToTop'
+import { GrandLoader } from './components/modules/Loader'
+import Undo from './components/modules/Undo'
 
-const App = props => {
+const App = () => {
     const { state, dispatch } = useContext(AppContext)
     const { initialising, user } = useAuthState(firebase.auth)
 
     // manage ALL state transfers to & from firebase
 
     useEffect(() => {
+        // eslint-disable-next-line no-console
         console.log('State Updated!', state)
         if (user && state && state.user && state.ui.syncPending) {
             dispatch({
@@ -44,6 +48,13 @@ const App = props => {
         }
     }, [initialising, state])
 
+    useSync(() => {
+        dispatch({
+            type: LOAD_USERDATA,
+            payload: { dispatch },
+        })
+    }, 300000) // 300000
+
     return initialising !== true ? (
         <>
             <Router>
@@ -51,25 +62,20 @@ const App = props => {
                 <Switch>
                     <UnAuthRoute path="/" exact component={LandingPage} />
                     <AuthRoute path="/styles" exact component={Styles} />
+
                     <UnAuthRoute path="/login" exact component={AuthPage} />
                     <UnAuthRoute path="/login/:id" exact component={AuthPage} />
                     <AuthRoute path="/today" exact component={TodayPage} />
                     <AuthRoute path="/objectives" exact component={ObjectivesPage} />
                     <AuthRoute path="/objectives/:id" exact component={ObjectivesPage} />
-                    <AuthRoute path="/other" exact component={TaskPage} />
+                    <AuthRoute path="/tasks" exact component={TaskPage} />
                     <Route component={NotFoundPage} />
                 </Switch>
-                <QuoteBar />
+                <Undo />
             </Router>
         </>
     ) : (
-        <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <h1>Loading</h1>
-        </div>
+        <GrandLoader />
     )
 }
 
