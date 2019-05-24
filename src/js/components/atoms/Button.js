@@ -70,6 +70,7 @@ const modifier = ({ mod, theme }) => {
 const StyledButton = styled.button`
     padding: 16px 32px;
     border-radius: 2px;
+    margin-top: 16px;
     border: none;
     transition: all 300ms ease-in-out;
     white-space: nowrap;

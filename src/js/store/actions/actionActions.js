@@ -1,4 +1,5 @@
 import uuidv4 from 'uuid/v4'
+import moment from 'moment'
 import {} from '../types'
 //  !TASK ACTIONS
 export const addActionAction = (state, { value, objectiveUid }) => {
@@ -21,7 +22,7 @@ export const addActionAction = (state, { value, objectiveUid }) => {
     }
 }
 
-export const updateActionAction = (state, { value }) => {
+export const updateActionAction = (state, { value, updateType }) => {
     const { db, ui } = state
     const newActions = []
     db.actions.forEach(action => {
@@ -30,6 +31,20 @@ export const updateActionAction = (state, { value }) => {
         }
         return newActions.push(action)
     })
+
+    if (updateType === 'completed') {
+        const actionObjective = db.objectives.filter(obj => obj.uid === value.objective)[0]
+        actionObjective.totalTasks += 1
+        const log = {
+            type: 'task',
+            item: value,
+            timeStamp: moment().format(),
+        }
+        actionObjective.log.push(log)
+        const objectives = db.objectives.filter(obj => obj.uid !== value.objective)
+        objectives.push(actionObjective)
+    }
+
     db.actions = newActions
     ui.syncPending = true
     return {

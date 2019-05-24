@@ -9,6 +9,7 @@ import LandingPage from './components/pages/LandingPage'
 import AuthPage from './components/pages/AuthPage'
 import TaskPage from './components/pages/TaskPage'
 import ObjectivesPage from './components/pages/ObjectivesPage'
+import CompleteObjectivesPage from './components/modules/CompletedObjective'
 import Styles from './components/pages/Styles'
 import TodayPage from './components/pages/TodayPage'
 import NotFoundPage from './components/pages/NotFoundPage'
@@ -61,13 +62,14 @@ const App = () => {
                 <NavBar />
                 <Switch>
                     <UnAuthRoute path="/" exact component={LandingPage} />
-                    <AuthRoute path="/styles" exact component={Styles} />
+                    <Route path="/styles" exact component={CompleteObjectivesPage} />
 
                     <UnAuthRoute path="/login" exact component={AuthPage} />
                     <UnAuthRoute path="/login/:id" exact component={AuthPage} />
                     <AuthRoute path="/today" exact component={TodayPage} />
                     <AuthRoute path="/objectives" exact component={ObjectivesPage} />
                     <AuthRoute path="/objectives/:id" exact component={ObjectivesPage} />
+                    <AuthRoute path="/objectives/complete/:id" exact component={CompleteObjectivesPage} />
                     <AuthRoute path="/tasks" exact component={TaskPage} />
                     <Route component={NotFoundPage} />
                 </Switch>

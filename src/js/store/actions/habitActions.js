@@ -1,4 +1,5 @@
 import uuidv4 from 'uuid/v4'
+import moment from 'moment'
 import { POST_DATA } from '../types'
 //  !HABIT ACTIONS
 export const addHabitAction = (state, { value, objectiveUid }) => {
@@ -36,12 +37,23 @@ export const deleteHabitAction = (state, payload) => {
     }
 }
 
-export const updateHabitAction = (state, { value, dispatch }) => {
+export const updateHabitAction = (state, { value, updateType, dispatch }) => {
     const { db, ui } = state
     const newHabits = []
 
     ui.undoAble = true
-
+    if (updateType === 'completed') {
+        const habitsObjective = db.objectives.filter(obj => obj.uid === value.objective)[0]
+        habitsObjective.totalHabits += 1
+        const log = {
+            type: 'habit',
+            item: value,
+            timeStamp: moment().format(),
+        }
+        habitsObjective.log.push(log)
+        const objectives = db.objectives.filter(obj => obj.uid !== value.objective)
+        objectives.push(habitsObjective)
+    }
     db.habits.forEach(habit => {
         if (habit.uid === value.uid) {
             return newHabits.push(value)

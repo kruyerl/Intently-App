@@ -60,7 +60,7 @@ const ButtonBox = styled.div`
     }
 `
 
-const Objective = ({ obj }) => {
+const Objective = ({ obj, history }) => {
     const { state, dispatch } = useContext(AppContext)
     const handleDelete = () => {
         dispatch({ type: DELETE_OBJECTIVE, payload: obj.uid })
@@ -98,6 +98,10 @@ const Objective = ({ obj }) => {
         })
 
         return null
+    }
+    const achieveObjective = () => {
+        // achieve
+        history.push(`/objectives/complete/${obj.uid}`)
     }
 
     return (
@@ -155,7 +159,9 @@ const Objective = ({ obj }) => {
                 </DragDropContext>
 
                 <ButtonBox>
-                    <Button mod="interactive">I achieved this objective</Button>
+                    <Button mod="interactive" onClick={achieveObjective}>
+                        I achieved this objective
+                    </Button>
                     <Button mod="grey" onClick={handleDelete} unactive>
                         I give up
                     </Button>

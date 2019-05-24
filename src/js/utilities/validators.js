@@ -14,6 +14,7 @@ export function validateObjective(data) {
     const errors = {}
     // title
     if (isEmpty(data.title)) errors.title = 'Must not be empty'
+    if (data.title.startsWith('I will')) errors.title = "Please remove 'I will'"
     // due
     if (data.due <= 0) {
         errors.due = 'Must be in the future'
@@ -23,6 +24,7 @@ export function validateObjective(data) {
     }
     // why
     if (isEmpty(data.why)) errors.why = 'Must not be empty'
+    if (data.why.startsWith('This matters to me because')) errors.why = "Please remove 'This matters to me because'"
 
     return {
         errors,

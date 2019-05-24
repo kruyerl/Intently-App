@@ -145,6 +145,7 @@ const Action = ({ type, obj, edit, index }) => {
             type: updateType,
             payload: {
                 value: itemToCheck,
+                updateType: 'edit',
             },
         })
     }
@@ -177,10 +178,12 @@ const Action = ({ type, obj, edit, index }) => {
         const updateType = getType(type)
         const itemToCheck = db[`${type}s`].filter(item => item.uid === obj.uid)[0]
         itemToCheck.complete = !itemToCheck.complete
+        const completed = itemToCheck.complete === true ? 'completed' : 'uncompleted'
         dispatch({
             type: updateType,
             payload: {
                 value: itemToCheck,
+                updateType: completed,
             },
         })
     }
@@ -197,7 +200,7 @@ const Action = ({ type, obj, edit, index }) => {
     return db ? (
         <Draggable draggableId={obj.uid} index={index} onSubmit={onSave}>
             {provided => (
-                <Container {...provided.draggableProps} ref={provided.innerRef}>
+                <Container {...provided.draggableProps} ref={provided.innerRef} onSubmit={onSave}>
                     <Task onClick={handleCheck}>
                         {actionState.edit === true ? (
                             <StyledInput value={actionState.value} onChange={onEdit} />
@@ -251,7 +254,7 @@ const Action = ({ type, obj, edit, index }) => {
 
 Action.propTypes = {
     type: PropTypes.string.isRequired,
-    index: PropTypes.number.isRequired,
+    index: PropTypes.number,
     obj: PropTypes.object.isRequired,
     edit: PropTypes.bool,
 }

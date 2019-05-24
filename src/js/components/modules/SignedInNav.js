@@ -40,6 +40,11 @@ const SignedInNav = () => {
                 </Anchor>
             </StyledAuth>
             <StyledAuth>
+                <Anchor mod="" tag="navlink" to="/reviews">
+                    Reviews
+                </Anchor>
+            </StyledAuth>
+            <StyledAuth>
                 <Anchor mod="" tag="navlink" to="/tasks">
                     Tasks
                 </Anchor>

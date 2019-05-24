@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import Text from '../atoms/Text'
-
+import logo from '../../../assets/img/logo.svg'
 //! Styles:
 const Container = styled.section`
     position: absolute;
@@ -17,6 +17,14 @@ const Container = styled.section`
     align-items: center;
     justify-content: center;
     z-index: 9999;
+    flex-direction: column;
+    div {
+        img {
+            width: 240px;
+        }
+        max-width: 45px;
+        overflow: hidden;
+    }
 `
 const Styled = styled(Text)`
     color: blank;
@@ -53,6 +61,9 @@ export const GrandLoader = ({ tag, align }) => {
 
     return (
         <Container>
+            <div>
+                <img src={logo} alt="Logo for Intently" />
+            </div>
             <Styled tag={(tag && tag) || 'h3'} align={align} mod="brand">{`Loading${state}`}</Styled>
         </Container>
     )

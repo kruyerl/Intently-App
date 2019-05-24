@@ -1,18 +1,19 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { rgba } from 'polished'
-import moment from 'moment'
+import { Draggable } from 'react-beautiful-dnd'
 import Text from '../atoms/Text'
 import AppContext from '../../store/context'
 import { UPDATE_TASK, DELETE_TASK, UPDATE_HABIT, DELETE_HABIT, UPDATE_ACTION, DELETE_ACTION } from '../../store/types'
+import { Input } from '../atoms/Form'
 
-const Container = styled.section`
-    padding: 8px 4px;
+const Container = styled.form`
+    padding: 8px;
     background: ${props => rgba(props.theme.colors.brand.base, 0)};
     border-top: 1px solid ${props => rgba(props.theme.colors.layout.grey, 0.5)};
     border-bottom: 1px solid ${props => rgba(props.theme.colors.layout.grey, 0.5)};
-
+    outline: none;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -41,10 +42,10 @@ const Tools = styled.ul`
 `
 const Tool = styled.a`
     font-size: 24px !important;
-    color: ${props => rgba(props.theme.colors.layout.black, 0.5)};
+    color: ${props => rgba(props.theme.colors.layout.black, 0.4)};
     margin-left: 12px;
 
-    transition: all 300ms cubic-bezier(0.66, 0.01, 0.43, 1.01);
+    transition: all 600ms ease-in-out;
     &:hover {
         color: ${props => rgba(props.theme.colors.interactive.base, 0.9)};
         cursor: pointer;
@@ -54,7 +55,15 @@ const Tool = styled.a`
         opacity: 1;
     }
 `
-const Checkbox = styled.div`
+const Save = styled(Tool)`
+    color: ${props => rgba(props.theme.colors.brand.base, 0.8)};
+    &:hover {
+        color: ${props => rgba(props.theme.colors.interactive.base, 0.9)};
+        cursor: pointer;
+    }
+`
+const Checkbox = styled.a`
+    pointer-events: none;
     margin: 0px;
     padding: 8px;
     width: 24px;
@@ -79,7 +88,7 @@ const Checkbox = styled.div`
         `}
 `
 const Description = styled(Text)`
-    margin: 0px 8px;
+    margin: 0px 16px;
     flex: 1;
     transition: all 300ms cubic-bezier(0.66, 0.01, 0.43, 1.01);
     ${props =>
@@ -92,13 +101,54 @@ const Description = styled(Text)`
         color: ${rgba(props.theme.colors.layout.black, 1)};
         `}
 `
+const Icon = styled.i`
+    font-size: 18px;
+`
+const StyledInput = styled(Input)`
+    font: 300 14px 'worksans-regular', sans-serif;
+    margin: 0px;
+    width: 100%;
+`
 
-const NonDragAction = ({ type, obj, edit }) => {
+const Action = ({ type, obj, edit, index }) => {
     const {
         state: { db },
         dispatch,
     } = useContext(AppContext)
 
+    const [actionState, setActionState] = useState({
+        value: obj.body,
+        edit: false,
+    })
+    function toggleEdit() {
+        setActionState({
+            ...actionState,
+            edit: !actionState.edit,
+        })
+    }
+    function onEdit(e) {
+        setActionState({
+            ...actionState,
+            value: e.target.value,
+        })
+    }
+    function onSave(e) {
+        e.preventDefault()
+        const updateType = getType(type)
+        const itemToCheck = db[`${type}s`].filter(item => item.uid === obj.uid)[0]
+        itemToCheck.body = actionState.value
+        setActionState({
+            ...actionState,
+            edit: false,
+        })
+        dispatch({
+            type: updateType,
+            payload: {
+                value: itemToCheck,
+                updateType: 'edit',
+            },
+        })
+    }
     function getType(typeOf) {
         switch (typeOf) {
             case 'habit':
@@ -128,13 +178,12 @@ const NonDragAction = ({ type, obj, edit }) => {
         const updateType = getType(type)
         const itemToCheck = db[`${type}s`].filter(item => item.uid === obj.uid)[0]
         itemToCheck.complete = !itemToCheck.complete
-        if (itemToCheck.complete) {
-            itemToCheck.lastCompleted = moment().format()
-        }
+        const completed = itemToCheck.complete === true ? 'completed' : 'uncompleted'
         dispatch({
             type: updateType,
             payload: {
                 value: itemToCheck,
+                updateType: completed,
             },
         })
     }
@@ -149,21 +198,38 @@ const NonDragAction = ({ type, obj, edit }) => {
     }
 
     return db ? (
-        <Container>
+        <Container onSubmit={onSave}>
             <Task onClick={handleCheck}>
-                <Checkbox checked={obj.complete} />
-
-                <Description tag="small" checked={obj.complete}>
-                    {obj.body && obj.body}
-                </Description>
+                {actionState.edit === true ? (
+                    <StyledInput value={actionState.value} onChange={onEdit} />
+                ) : (
+                    <>
+                        <Checkbox checked={obj.complete} onClick={handleCheck} />
+                        <Description tag="small" checked={obj.complete}>
+                            {obj.body && obj.body}
+                        </Description>
+                    </>
+                )}
             </Task>
             {edit && (
                 <Tools>
+                    {actionState.edit === true ? (
+                        <li>
+                            <Save onClick={onSave}>
+                                <Icon className="material-icons">save</Icon>
+                            </Save>
+                        </li>
+                    ) : (
+                        <li>
+                            <Tool onClick={toggleEdit}>
+                                <Icon className="material-icons">create</Icon>
+                            </Tool>
+                        </li>
+                    )}
                     <li>
-                        <Tool>✎</Tool>
-                    </li>
-                    <li>
-                        <Tool onClick={handleDelete}>×</Tool>
+                        <Tool onClick={handleDelete}>
+                            <Icon className="material-icons">clear</Icon>
+                        </Tool>
                     </li>
                 </Tools>
             )}
@@ -171,10 +237,11 @@ const NonDragAction = ({ type, obj, edit }) => {
     ) : null
 }
 
-NonDragAction.propTypes = {
+Action.propTypes = {
     type: PropTypes.string.isRequired,
+    index: PropTypes.number,
     obj: PropTypes.object.isRequired,
     edit: PropTypes.bool,
 }
 
-export default NonDragAction
+export default Action

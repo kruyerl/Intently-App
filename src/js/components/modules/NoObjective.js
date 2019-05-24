@@ -115,6 +115,7 @@ const NoObjective = ({ match }) => {
     }
     const handleSubmit = e => {
         e.preventDefault()
+
         const validated = validateObjective(state)
         if (validated.valid) {
             setState(initialState)

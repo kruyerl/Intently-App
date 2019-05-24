@@ -18,6 +18,7 @@ export const addObjectiveAction = (state, { value }) => {
         createdAt: Date.now(),
         totalTasks: 0,
         totalHabits: 0,
+        log: [],
     }
     db.objectives.push(newObjective)
     ui.loading = false

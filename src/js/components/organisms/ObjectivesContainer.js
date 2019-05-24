@@ -18,7 +18,8 @@ const ObjectivesContainer = props => {
 
     const x = objectives.filter(objective => objective.category === params.id)
 
-    if (x.length > 0) return x.map(obj => <Objective category={props.match} key={obj.uid} obj={obj} />)
+    if (x.length > 0)
+        return x.map(obj => <Objective history={props.history} category={props.match} key={obj.uid} obj={obj} />)
     return <NoObjective {...props} />
 }
 
