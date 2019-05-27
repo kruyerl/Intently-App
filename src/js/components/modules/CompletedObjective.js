@@ -63,6 +63,11 @@ const ButtonBox = styled.div`
     }
 `
 
+String.prototype.uncapitalizeFirstLetter = function() {
+    return this.charAt(0).toLowerCase() + this.slice(1);
+}
+
+
 const Objective = ({ history, match }) => {
     const { state, dispatch } = useContext(AppContext)
     const { objectives, actions, habits } = state.db
@@ -87,7 +92,6 @@ const Objective = ({ history, match }) => {
     const handleUndo = () => {
         history.push(`/objectives/${localState.objective.category}`)
     }
-    console.log(localState)
     return state && localState.objective ? (
         <Container>
             <MaxWidth>
@@ -97,7 +101,7 @@ const Objective = ({ history, match }) => {
                 <hr />
                 <Text tag="h3">{` On the ${moment(localState.objective.createdAt).format(
                     'Do [of] MMM YYYY'
-                )} you set out to ${localState.objective.title.replace(/I/g, 'you').replace(/my/, 'your')}`}</Text>
+                )} you set out to ${localState.objective.title.replace(/I /g, 'you ').replace(/my /, 'your ').uncapitalizeFirstLetter()}`}</Text>
 
                 <Text tag="h4">
                     {`Today, after ${moment({ hours: 0 }).diff(localState.objective.createdAt, 'days') * -1} days, ${

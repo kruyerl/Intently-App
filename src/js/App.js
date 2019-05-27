@@ -9,16 +9,16 @@ import LandingPage from './components/pages/LandingPage'
 import AuthPage from './components/pages/AuthPage'
 import TaskPage from './components/pages/TaskPage'
 import ObjectivesPage from './components/pages/ObjectivesPage'
+import ReviewsPage from './components/pages/ReviewsPage'
 import CompleteObjectivesPage from './components/modules/CompletedObjective'
-import Styles from './components/pages/Styles'
 import TodayPage from './components/pages/TodayPage'
 import NotFoundPage from './components/pages/NotFoundPage'
 import AppContext from './store/context'
 import { LOAD_USERDATA, POST_DATA } from './store/types'
 import { useSync } from './utilities/sync'
-import ScrollToTop from './utilities/ScrollToTop'
 import { GrandLoader } from './components/modules/Loader'
 import Undo from './components/modules/Undo'
+import ScrollToTop from 'react-router-scroll-top'
 
 const App = () => {
     const { state, dispatch } = useContext(AppContext)
@@ -59,6 +59,7 @@ const App = () => {
     return initialising !== true ? (
         <>
             <Router>
+             <ScrollToTop>
                 <NavBar />
                 <Switch>
                     <UnAuthRoute path="/" exact component={LandingPage} />
@@ -70,10 +71,11 @@ const App = () => {
                     <AuthRoute path="/objectives" exact component={ObjectivesPage} />
                     <AuthRoute path="/objectives/:id" exact component={ObjectivesPage} />
                     <AuthRoute path="/objectives/complete/:id" exact component={CompleteObjectivesPage} />
+                    <AuthRoute path="/reviews" exact component={ReviewsPage} />
                     <AuthRoute path="/tasks" exact component={TaskPage} />
                     <Route component={NotFoundPage} />
                 </Switch>
-                <Undo />
+ </ScrollToTop>
             </Router>
         </>
     ) : (

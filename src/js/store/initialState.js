@@ -12,6 +12,7 @@ export const initialState = {
     db: {
         tasks: [],
         objectives: [],
+        reviews: [],
         actions: [],
         habits: [],
     },

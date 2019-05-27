@@ -10,6 +10,20 @@ const isEmpty = string => {
     return false
 }
 
+export function validateReview(data) {
+    const errors = {}
+    // title
+    if (isEmpty(data.description)) errors.description = 'Must not be empty'
+    if (isEmpty(data.differently)) errors.differently = 'Must not be empty'
+    if (isEmpty(data.grateful)) errors.grateful = 'Must not be empty'
+    if (isEmpty(data.effective)) errors.effective = 'Must not be empty'
+    if (isEmpty(data.ineffective)) errors.ineffective = 'Must not be empty'
+    return {
+        errors,
+        valid: Object.keys(errors).length === 0,
+    }
+}
+
 export function validateObjective(data) {
     const errors = {}
     // title

@@ -7,7 +7,7 @@ import Button from '../atoms/Button'
 import NonDragAction from '../modules/NonDragAction'
 import FooterCTA from './FooterCTA'
 import AppContext from '../../store/context'
-
+import moment from 'moment'
 const Container = styled.section`
     background: ${props => props.theme.colors.layout.white};
 `
@@ -24,6 +24,22 @@ const ActionsContainer = styled.ul`
 `
 const Tasks = ({ number }) => {
     const context = useContext(AppContext)
+
+
+
+    const tasksPick =(taskArr)=>{
+
+        const chosenTasks = taskArr.filter(task=>{
+
+            if (task.lastComplete === null ){
+                return true
+            }
+            if (moment({ hours: 0 }).diff(task.lastComplete, 'days') <= 0 ){
+                return true
+            }
+        })
+        return chosenTasks
+    }
     return (
         <Container>
             <MaxWidth>
@@ -32,14 +48,14 @@ const Tasks = ({ number }) => {
                 </Text>
                 <ActionsContainer>
                     {context.state && context.state.db.tasks
-                        ? context.state.db.tasks
+                        ? tasksPick(context.state.db.tasks)
                               .slice(0, number)
                               .map(task => <NonDragAction key={task.uid} type="task" obj={task} />)
                         : null}
                     {context.state && context.state.db.tasks.length < 1 ? (
                         <>
                             <Text tag="p" mod="black">
-                                The next tasks of each of your objectives show up here everyday
+                                We get it, you have things you need to do. After you set up your tasks a handful of them will apear here.
                             </Text>
                             <Anchor tag="link" mod="interactive" to="/tasks">
                                 Create some tasks

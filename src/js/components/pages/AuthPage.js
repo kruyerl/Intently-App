@@ -7,19 +7,14 @@ import Text from '../atoms/Text'
 import Button from '../atoms/Button'
 import AuthSignIn from '../organisms/AuthSignIn'
 import AuthSignUp from '../organisms/AuthSignUp'
-
+import authImg from '../../../assets/img/auth.png'
 const StyledAuth = styled.div`
-    ${'' /* background: url(${props => (props.backgroundImg ? props.backgroundImg : background)}); */}
-    ${props =>
-        linearGradient({
-            colorStops: [`${props.theme.colors.interactive.base} 0%`, `${props.theme.colors.layout.white} 95%`],
-            toDirection: 'to bottom right',
-            fallback: '#FFF',
-        })}
-        background-size: cover;
+background-color: ${props => props.theme.colors.layout.grey};
+
+    background-image: url('${authImg}');
+    bcakground-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+    background-position: bottom center;
 
     span {
         min-height: 100vh;
@@ -70,7 +65,7 @@ const AuthPage = ({ history, match: { params } }) => {
             <span>
                 <AuthModule>
                     <Text tag="h4" align="center" mod="black">
-                        Hello, Good Day!
+                        Welcome!
                     </Text>
                     <Text tag="p" align="center" mod="black">
                         <strong>Please log in or sign up to continue</strong>

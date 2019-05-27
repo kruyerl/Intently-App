@@ -60,6 +60,9 @@ const ButtonBox = styled.div`
     }
 `
 
+String.prototype.uncapitalizeFirstLetter = function() {
+    return this.charAt(0).toLowerCase() + this.slice(1);
+}
 const Objective = ({ obj, history }) => {
     const { state, dispatch } = useContext(AppContext)
     const handleDelete = () => {
@@ -108,7 +111,7 @@ const Objective = ({ obj, history }) => {
         <Container>
             <MaxWidth>
                 <Text tag="h3">Regarding my {obj.category}</Text>
-                <Text tag="h2">{`I will ${obj.title} by the ${moment(obj.due).format('Do [of] MMMM')}`}</Text>
+                <Text tag="h2">{`I will ${obj.title.uncapitalizeFirstLetter()} by the ${moment(obj.due).format('Do [of] MMMM')}`}</Text>
                 <Text tag="p">
                     <strong>This matters to me because {obj.why}</strong>
                 </Text>
@@ -130,6 +133,7 @@ const Objective = ({ obj, history }) => {
                 </Stats>
                 <Text tag="h3">These habits will foster the behaviour I need to succeed</Text>
 
+
                 <ActionBox>
                     {habits &&
                         habits
@@ -143,7 +147,7 @@ const Objective = ({ obj, history }) => {
                         {provided => (
                             <ActionsContainer ref={provided.innerRef} {...provided.droppableProps}>
                                 <Text tag="h3">These are the actions I will take to accomplish my objective</Text>
-
+<Text tag="p" > You can arrange and prioritise these actions by dragging them around</Text>
                                 {actions &&
                                     actions
                                         .filter(action => action.objective === obj.uid)

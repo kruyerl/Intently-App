@@ -86,6 +86,11 @@ const ThreeColumn = styled.section`
         }
     }
 `
+const Title = styled(Text)`
+@media (max-width: ${props => props.theme.screens.desktop}) {
+    text-align: center;
+    }
+`
 const Cta = styled.section`
     display: flex;
     flex-direction: column;
@@ -107,11 +112,9 @@ const LandingPage = ({ history }) => {
                 <section>
                     <div>
                         <Text tag="h2">Life is precious</Text>
-                        <Text tag="h1">Be intentional with how you live yours</Text>
+                        <Text tag="h1">Live yours with intentionality</Text>
                         <Text tag="p">
-                            Life can feel overwhelming, but it doesn’t have to. Intentlyds lets you keep track of
-                            everything in one place, so you can get it all done and enjoy more peace of mind along the
-                            way.
+                            Life is overwhelming, but it doesn't have to be that way. Intently helps get what you want out of life by distilling the destination into simple consistent steps. So you can accomplish amazing things and enjoy more of life along the way.
                         </Text>
 
                         <CTAButtons mod="interactive" onClick={handleClick} name="login">
@@ -124,44 +127,42 @@ const LandingPage = ({ history }) => {
             <TextWithImage>
                 <img src={lost} alt="" />
                 <div>
-                    <Text tag="h3">
+                    <Title tag="h3">
                         Never feel lost again, <br /> Find purpose in action
-                    </Text>
+                    </Title>
                     <Text tag="p">
-                        Life can feel overwhelming, but it doesn’t have to. Intentlyds lets you keep track of everything
-                        in one place, so you can get it all done and enjoy more peace of mind along the way.
+                        Making decisions can be hard. By tieing decisions to your objectives Intently empowers you to take action and move the needle.
                     </Text>
-                    <Anchor tag="link" to="/" mod="interactive">
-                        See how we change lives
+                    <Anchor tag="link" to="/login" mod="interactive">
+                        Make things happen
                     </Anchor>
                 </div>
             </TextWithImage>
             <MaxWidth>
-                <Text tag="h3">
+                <Title tag="h3">
                     Take back your life. <br />
                     Focus on what matters to you
-                </Text>
+                </Title>
                 <Text tag="p">
-                    Life can feel overwhelming, but it doesn’t have to. Intentlyds lets you keep track of everything in
-                    one place, so you can get it all done and enjoy more peace of mind along the way.
+                    In order to help you claim back the moments that matter to you most. Intently helps you limit your attention, focusing on being effective and consistent.
                 </Text>
                 <ThreeColumn>
                     <article>
                         <img src={thevision} alt="" />
-                        <Text tag="h4">Visualise your future</Text>
+                        <Text tag="h4">Be more present</Text>
                     </article>
                     <article>
                         <img src={setObjectives} alt="" />
-                        <Text tag="h4">Setup your objectives</Text>
+                        <Text tag="h4">Be more focused</Text>
                     </article>
                     <article>
                         <img src={theaction} alt="" />
-                        <Text tag="h4">Take simple action daily </Text>
+                        <Text tag="h4">Be more productive</Text>
                     </article>
                 </ThreeColumn>
             </MaxWidth>
             <Cta>
-                <Text tag="h3">Know your path & walk it with Intently</Text>
+                <Title tag="h3">Know the path & walk it with Intently</Title>
                 <CTAButtons mod="interactive" onClick={handleClick} name="login">
                     Begin your journey
                 </CTAButtons>

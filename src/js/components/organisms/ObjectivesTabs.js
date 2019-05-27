@@ -53,7 +53,7 @@ const ObjectivesTabs = ({ match, history }) => {
                 return '“Contribution” is your ability to add value in this world. Sometimes that value is going to be a monetary exchange. Sometimes it’s going to be charitable.'
 
             case 'calibration':
-                return '"Calibration" is all about getting right with yourself. Its about your psyche and the virtues of honor and integrity we must all adhere to. Its about your soul and if you believe, your spirituality.  '
+                return '"Calibration" is all about getting right with yourself. Its about your psyche and the virtues of honor and integrity. Its about your soul and if you believe, your spirituality.  '
             case 'connection':
                 return 'This is your ability to connect with others – your family, your neighbors, your co-workers, your friends. It’s critical that we step back occasionally and evaluate the relationships that we want and the relationships that we already have. '
             default:

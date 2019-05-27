@@ -63,12 +63,12 @@ const Save = styled(Tool)`
     }
 `
 const Checkbox = styled.a`
-    pointer-events: none;
     margin: 0px;
     padding: 8px;
     width: 24px;
     height: 24px;
-
+    min-width: 24px;
+    min-height: 24px;
     background: ${props => props.theme.colors.layout.grey};
     border: 1px solid grey;
     border-radius: 12px;
@@ -88,6 +88,7 @@ const Checkbox = styled.a`
         `}
 `
 const Description = styled(Text)`
+outline: 0px;
     margin: 0px 16px;
     flex: 1;
     transition: all 300ms cubic-bezier(0.66, 0.01, 0.43, 1.01);
@@ -201,13 +202,14 @@ const Action = ({ type, obj, edit, index }) => {
         <Draggable draggableId={obj.uid} index={index} onSubmit={onSave}>
             {provided => (
                 <Container {...provided.draggableProps} ref={provided.innerRef} onSubmit={onSave}>
-                    <Task onClick={handleCheck}>
+                    {actionState.edit === false && ( <Checkbox checked={obj.complete} onClick={handleCheck} />)}
+                    <Task {...provided.dragHandleProps}>
                         {actionState.edit === true ? (
                             <StyledInput value={actionState.value} onChange={onEdit} />
                         ) : (
                             <>
-                                <Checkbox checked={obj.complete} onClick={handleCheck} />
-                                <Description tag="small" {...provided.dragHandleProps} checked={obj.complete}>
+
+                                <Description tag="small" checked={obj.complete}>
                                     {obj.body && obj.body}
                                 </Description>
                             </>
@@ -229,19 +231,8 @@ const Action = ({ type, obj, edit, index }) => {
                                 </li>
                             )}
                             <li>
-                                <Tool>
-                                    <Icon className="material-icons">today</Icon>
-                                </Tool>
-                            </li>
-                            <li>
                                 <Tool onClick={handleDelete}>
                                     <Icon className="material-icons">clear</Icon>
-                                </Tool>
-                            </li>
-
-                            <li>
-                                <Tool {...provided.dragHandleProps}>
-                                    <Icon className="material-icons">drag_indicator</Icon>
                                 </Tool>
                             </li>
                         </Tools>

@@ -10,7 +10,7 @@ import { GrandLoader, Loader } from '../modules/Loader'
 import AppContext from '../../store/context'
 import { REORDER_TASK } from '../../store/types'
 import QuoteBar from '../modules/QuoteBar'
-
+import beingbusy from '../../../assets/img/beingbusy.png'
 const Container = styled.section`
     background: ${props => props.theme.colors.layout.white};
 `
@@ -66,6 +66,9 @@ const TaskPage = () => {
                     <Text tag="h3" mod="brand">
                         These are the tasks that need to get done but aren't crucial to achieving your objectives.
                     </Text>
+                    <Text tag="p" mod="brand">
+                        You can arrange and prioritise these tasks by dragging them around
+                    </Text>
                     <DragDropContext onDragEnd={onDragEnd}>
                         <Droppable droppableId="taskPage">
                             {provided => (
@@ -86,7 +89,7 @@ const TaskPage = () => {
                     </DragDropContext>
                 </MaxWidth>
             </Container>
-            <FooterCTA h4="Being busy doesn't mean I am being effective. I must prioritise and execute" />
+            <FooterCTA img={beingbusy} heading="Being busy doesn't mean you are being effective." subheading="Consider the cost of each task"/>
             <QuoteBar />
         </>
     ) : (

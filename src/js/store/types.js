@@ -43,3 +43,9 @@ export const ADD_ACTION = 'ADD_ACTION'
 export const UPDATE_ACTION = 'UPDATE_ACTION'
 export const DELETE_ACTION = 'DELETE_ACTION'
 export const REORDER_ACTION = 'REORDER_ACTION'
+
+//* ACTION Types
+export const ADD_REVIEW = 'ADD_REVIEW'
+export const UPDATE_REVIEW = 'UPDATE_REVIEW'
+export const DELETE_REVIEW = 'DELETE_REVIEW'
+export const REORDER_REVIEW = 'REORDER_REVIEW'

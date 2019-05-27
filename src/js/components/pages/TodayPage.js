@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext } from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Text from '../atoms/Text'
 import Button from '../atoms/Button'
@@ -9,17 +8,11 @@ import NonDragAction from '../modules/NonDragAction'
 import HeroHeader from '../modules/HeroHeader'
 import QuoteBar from '../modules/QuoteBar'
 import Commitments from '../organisms/Commitments'
-import FooterCTA from '../organisms/FooterCTA'
 import Tasks from '../organisms/Tasks'
 import AppContext from '../../store/context'
 import { GrandLoader } from '../modules/Loader'
-
-const StyledButton = styled(Button)`
-    margin-right: 16px;
-`
-const StyledButtonContainer = styled.div`
-    margin-bottom: 24px;
-`
+import AfterActionReviews from '../modules/AfterActionReviews'
+import moment from 'moment'
 
 const ActionsContainer = styled.ul`
     padding: 0px;
@@ -28,15 +21,28 @@ const ActionsContainer = styled.ul`
     max-width: ${props => props.theme.screens.tablet};
 `
 
-const TodayPage = () => {
+const TodayPage = props => {
     const { state } = useContext(AppContext)
     const { actions, objectives } = state.db
     const { displayName } = state.user
 
     const pickTopActionItems = (objectiveArr, actionArr) => {
+        //filter out actions completed && lastcompleted before yesterday
+        const chosenActions = actionArr.filter(action=>{
+
+            if (action.lastComplete === null ){
+                return true
+            }
+            if (moment({ hours: 0 }).diff(action.lastComplete, 'days') <= 0 ){
+                return true
+            }
+        })
+
+
+
         let objectiveUids = objectiveArr.map(objctv => objctv.uid)
         const pickedActions = []
-        actionArr.forEach(action => {
+        chosenActions.forEach(action => {
             if (objectiveUids.includes(action.objective)) {
                 pickedActions.push(action)
                 objectiveUids = objectiveUids.filter(uid => uid !== action.objective)
@@ -59,7 +65,7 @@ const TodayPage = () => {
                     {objectives && actions.length < 1 ? (
                         <>
                             <Text tag="p" mod="black">
-                                The next actions of each of your objectives show up here everyday
+                                The next steps to achieving amazing things happen and making your dreams a reality will appear here after you set them up in your objectives.
                             </Text>
                             <Anchor tag="link" to="/objectives">
                                 <Button mod="brand">Set an objective</Button>
@@ -70,16 +76,7 @@ const TodayPage = () => {
             </HeroHeader>
             <Commitments />
             <Tasks number={4} />
-            <FooterCTA
-                heading="Do your best today to serve yourself, your friends, family & your community"
-                subheading="Let's debrief & review the day."
-            >
-                <StyledButtonContainer>
-                    <StyledButton mod="brand" active>
-                        Review the day
-                    </StyledButton>
-                </StyledButtonContainer>
-            </FooterCTA>
+            <AfterActionReviews {...props} />
             <QuoteBar />
         </>
     ) : (

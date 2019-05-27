@@ -2,17 +2,17 @@
 import React, { useEffect, useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { validateObjective } from '../../utilities/validators'
+import { validateReview } from '../../utilities/validators'
 import Text from '../atoms/Text'
 import Button from '../atoms/Button'
 import { Input, TextArea, Label, Range } from '../atoms/Form'
-import img from '../../../assets/img/craft.png'
+import img from '../../../assets/img/lookforward.png'
 import AppContext from '../../store/context'
 import { Loader } from './Loader'
-import { ADD_OBJECTIVE, SET_ERROR, CLEAR_ERROR } from '../../store/types'
+import { ADD_REVIEW, SET_ERROR, CLEAR_ERROR } from '../../store/types'
 
 const Container = styled.section`
-    background: ${props => props.theme.colors.layout.grey};
+    background: ${props => props.theme.colors.layout.white};
 `
 const MaxWidth = styled.div`
     padding: 32px 24px;
@@ -46,7 +46,7 @@ const StyledFormElements = styled.div`
     overflow: hidden;
     transition: all 1000ms ease;
     margin-top: 16px;
-    ${props => (props.formIsOpen ? 'max-height: 600px' : null)}
+    ${props => (props.formIsOpen ? 'max-height: 2000px' : null)}
 `
 const Labels = styled(Label)`
     margin-bottom: 24px;
@@ -74,14 +74,17 @@ const RangeContainer = styled.div`
     }
 `
 
-const NoObjective = ({ match }) => {
+const AfterActionReviews = ({ match }) => {
     const context = useContext(AppContext)
     const initialState = {
-        category: match.params.id,
-        title: '',
-        why: '',
-        due: 12,
+        description: '',
+        differently: '',
+        grateful: '',
+        effective: '',
+        ineffective: '',
+        rating: 5,
         formIsOpen: false,
+        submitted: false,
     }
 
     const [state, setState] = useState(initialState)
@@ -115,12 +118,11 @@ const NoObjective = ({ match }) => {
     }
     const handleSubmit = e => {
         e.preventDefault()
-
-        const validated = validateObjective(state)
+        const validated = validateReview(state)
         if (validated.valid) {
             setState(initialState)
             context.dispatch({
-                type: ADD_OBJECTIVE,
+                type: ADD_REVIEW,
                 payload: {
                     value: state,
                     dispatch: context.dispatch,
@@ -169,55 +171,88 @@ const NoObjective = ({ match }) => {
             <MaxWidth>
                 <ContentBox>
                     <Text tag="h4">
-                        {state && state.formIsOpen ? `Great! Let's Begin` : 'No objective? All finished?'}
+                        {state && state.formIsOpen ? `Great! Let's Begin` : 'When all is said and done'}
                     </Text>
                     <Text tag="h3">
                         {state && state.formIsOpen
-                            ? `Regarding your ${match.params.id}`
-                            : 'Now is the time to be intentional about crafting your future.'}
+                            ? `Reflecting on your day`
+                            : 'Look back and be intentional about how you plan to move forward'}
                     </Text>
 
                     <form noValidate onSubmit={handleSubmit}>
                         <StyledFormElements formIsOpen={state.formIsOpen}>
                             <Labels>
-                                <Text tag="p">What will you achieve?</Text>
-                                <Input
+                                <Text tag="p">What happened today?</Text>
+                                <TextArea
                                     type="text"
-                                    placeholder="I will..."
-                                    value={state.title}
-                                    name="title"
+                                    placeholder=""
+                                    value={state.description}
+                                    name="description"
                                     onChange={handleChange}
                                 />
-                                {isError('title', 'right')}
+                                {isError('description', 'right')}
                             </Labels>
                             <Labels>
-                                <Text tag="p">How many weeks would this take?</Text>
-                                {isError('due', 'right')}
+                                <Text tag="p">Rate your performance?</Text>
+                                {isError('rating', 'right')}
 
                                 <RangeContainer>
-                                    <Text tag="p">{state.due}</Text>
+                                    <Text tag="p">{state.rating}</Text>
 
                                     <Range
                                         type="range"
-                                        placeholder="12"
-                                        value={state.due}
-                                        name="due"
+                                        placeholder="5"
+                                        value={state.rating}
+                                        name="rating"
                                         min="0"
-                                        max="12"
+                                        max="10"
                                         onChange={handleChange}
                                     />
                                 </RangeContainer>
                             </Labels>
                             <Labels>
-                                <Text tag="p">Why does this matter to you?</Text>
-                                <TextArea
+                                <Text tag="p">How were you most effective?</Text>
+                                <Input
                                     type="text"
-                                    placeholder="This matters to me because..."
-                                    value={state.why}
-                                    name="why"
+                                    placeholder=""
+                                    value={state.effective}
+                                    name="effective"
                                     onChange={handleChange}
                                 />
-                                {isError('why', 'right')}
+                                {isError('effective', 'right')}
+                            </Labels>
+                            <Labels>
+                                <Text tag="p">How were you most ineffective?</Text>
+                                <Input
+                                    type="text"
+                                    placeholder=""
+                                    value={state.ineffective}
+                                    name="ineffective"
+                                    onChange={handleChange}
+                                />
+                                {isError('ineffective', 'right')}
+                            </Labels>
+                            <Labels>
+                                <Text tag="p">What will you do differently tomorrow?</Text>
+                                <TextArea
+                                    type="text"
+                                    placeholder=""
+                                    value={state.differently}
+                                    name="differently"
+                                    onChange={handleChange}
+                                />
+                                {isError('differently', 'right')}
+                            </Labels>
+                            <Labels>
+                                <Text tag="p">What is one thing you are grateful for?</Text>
+                                <Input
+                                    type="text"
+                                    placeholder=""
+                                    value={state.grateful}
+                                    name="grateful"
+                                    onChange={handleChange}
+                                />
+                                {isError('grateful', 'right')}
                             </Labels>
                             <Status>
                                 {isError('general', 'center')}
@@ -225,7 +260,7 @@ const NoObjective = ({ match }) => {
                             </Status>
                         </StyledFormElements>
                         <StyledButtons mod={state && state.formIsOpen ? 'interactive' : 'brand'} onClick={handleClick}>
-                            {state && state.formIsOpen ? 'Submit new objective' : 'Create a new objective'}
+                            {state && state.formIsOpen ? 'Submit this review' : 'Review your day'}
                         </StyledButtons>
                         {state.formIsOpen && (
                             <StyledButtons mod="invisible" onClick={handleClose} unactive>
@@ -240,8 +275,4 @@ const NoObjective = ({ match }) => {
     )
 }
 
-NoObjective.propTypes = {
-    match: PropTypes.object.isRequired,
-}
-
-export default NoObjective
+export default AfterActionReviews

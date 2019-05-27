@@ -1,5 +1,6 @@
 import uuidv4 from 'uuid/v4'
 import { POST_DATA } from '../types'
+import moment from 'moment'
 //  !TASK ACTIONS
 export const addTaskAction = (state, { value, objectiveUid }) => {
     const { db, ui } = state
@@ -10,6 +11,7 @@ export const addTaskAction = (state, { value, objectiveUid }) => {
         complete: false,
         due: null,
         sheduled: null,
+        lastComplete: null,
     }
     db.tasks.push(newTask)
     ui.syncPending = true
@@ -20,15 +22,26 @@ export const addTaskAction = (state, { value, objectiveUid }) => {
     }
 }
 
-export const updateTaskAction = (state, { value, dispatch }) => {
+export const updateTaskAction = (state, { value, updateType }) => {
     const { db, ui } = state
     const newTasks = []
+
+    if (updateType === 'completed') {
+        value.lastComplete = moment().format().slice(0, 10)
+    }
     db.tasks.forEach(task => {
         if (task.uid === value.uid) {
             return newTasks.push(value)
         }
         return newTasks.push(task)
     })
+
+
+
+
+
+
+
     db.tasks = newTasks
     ui.syncPending = true
     return {

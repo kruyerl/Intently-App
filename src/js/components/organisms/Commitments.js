@@ -38,7 +38,7 @@ const Commitments = () => {
                 {habits && habits.length === 0 ? (
                     <>
                         <Text tag="p" mod="black">
-                            The next habits of each of your objectives show up here everyday
+                            You are what you repeatedly do. That said, fostering great habits is a powerful way to ensure you achieve your objectives. Your daily habits will appear here after you set them up in your objectives.
                         </Text>
                         <Anchor tag="link" mod="interactive" to="/objectives">
                             Set an objective

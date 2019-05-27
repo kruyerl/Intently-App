@@ -32,6 +32,8 @@ import {
     UPDATE_ACTION,
     DELETE_ACTION,
     REORDER_ACTION,
+    ADD_REVIEW,
+    DELETE_REVIEW,
 } from './types'
 
 import {
@@ -60,7 +62,7 @@ import {
 } from './actions/dataActions'
 
 import { addTaskAction, updateTaskAction, deleteTaskAction, reorderTaskAction } from './actions/taskActions'
-
+import { addReviewAction, deleteReviewAction } from './actions/reviewActions'
 import { addObjectiveAction, deleteObjectiveAction } from './actions/objectiveActions'
 import { addHabitAction, deleteHabitAction, updateHabitAction } from './actions/habitActions'
 import { addActionAction, deleteActionAction, updateActionAction, reorderActionsAction } from './actions/actionActions'
@@ -69,7 +71,14 @@ import { addActionAction, deleteActionAction, updateActionAction, reorderActions
 const appReducer = (state, { type, payload }) => {
     console.log(`dispatched: ${type}`)
     switch (type) {
-        // ?HABITS
+        // ?REVIEWS
+
+        case ADD_REVIEW:
+            return addReviewAction(state, payload)
+        case DELETE_REVIEW:
+            return deleteReviewAction(state, payload)
+
+        // ?ACTIONS
 
         case ADD_ACTION:
             return addActionAction(state, payload)
@@ -89,7 +98,7 @@ const appReducer = (state, { type, payload }) => {
         case DELETE_HABIT:
             return deleteHabitAction(state, payload)
 
-        // ?objectives
+        // ?OBJECTIVES
 
         case ADD_OBJECTIVE:
             return addObjectiveAction(state, payload)

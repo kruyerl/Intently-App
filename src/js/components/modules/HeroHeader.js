@@ -8,7 +8,7 @@ const HeroContainer = styled.header`
     ${'' /* background: url(${props => (props.backgroundImg ? props.backgroundImg : background)}); */}
     ${props =>
         linearGradient({
-            colorStops: [`${props.theme.colors.interactive.base} 0%`, `${props.theme.colors.layout.white} 95%`],
+            colorStops: [`${props.theme.colors.interactive.light} 0%`, `${props.theme.colors.interactive.dark} 75%`],
             toDirection: 'to bottom right',
             fallback: '#FFF',
         })}

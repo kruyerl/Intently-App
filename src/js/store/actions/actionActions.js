@@ -11,6 +11,7 @@ export const addActionAction = (state, { value, objectiveUid }) => {
         complete: false,
         due: null,
         sheduled: null,
+        lastComplete: null,
         objective: objectiveUid,
     }
     db.actions.push(newAction)
@@ -25,6 +26,9 @@ export const addActionAction = (state, { value, objectiveUid }) => {
 export const updateActionAction = (state, { value, updateType }) => {
     const { db, ui } = state
     const newActions = []
+    if (updateType === 'completed') {
+        value.lastComplete = moment().format().slice(0, 10)
+    }
     db.actions.forEach(action => {
         if (action.uid === value.uid) {
             return newActions.push(value)
@@ -35,10 +39,11 @@ export const updateActionAction = (state, { value, updateType }) => {
     if (updateType === 'completed') {
         const actionObjective = db.objectives.filter(obj => obj.uid === value.objective)[0]
         actionObjective.totalTasks += 1
+
         const log = {
             type: 'task',
             item: value,
-            timeStamp: moment().format(),
+            timeStamp: moment().format().slice(0, 10),
         }
         actionObjective.log.push(log)
         const objectives = db.objectives.filter(obj => obj.uid !== value.objective)
@@ -56,7 +61,6 @@ export const updateActionAction = (state, { value, updateType }) => {
 
 export const deleteActionAction = (state, payload) => {
     const { db, ui } = state
-    console.log('valueuid', payload)
 
     const updates = db.actions.filter(action => action.uid !== payload)
     db.actions = updates

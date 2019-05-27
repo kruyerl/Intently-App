@@ -5,7 +5,7 @@
   "main": "./src/pug/index.pug",
   "scripts": {
     "serve": "parcel ./src/pug/index.pug",
-    "dev": "code . && parcel ./src/pug/index.pug",
+    "dev": "parcel ./src/pug/index.pug && code .",
     "build": "npm run clean && parcel build ./src/pug/index.pug",
     "deploy": "npm run build && firebase deploy",
     "lint": "eslint .",
@@ -59,6 +59,7 @@
     "react-firebase-hooks": "^1.2.1",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
+    "react-router-scroll-top": "^0.1.1",
     "redux": "^4.0.1",
     "styled-components": "^4.2.0",
     "styled-modern-normalize": "^0.2.0",

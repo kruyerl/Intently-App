@@ -1,6 +1,6 @@
 import uuidv4 from 'uuid/v4'
 import moment from 'moment'
-import { POST_DATA } from '../types'
+import {} from '../types'
 //  !HABIT ACTIONS
 export const addHabitAction = (state, { value, objectiveUid }) => {
     const { db, ui } = state

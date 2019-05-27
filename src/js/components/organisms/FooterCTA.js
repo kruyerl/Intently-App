@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Text from '../atoms/Text'
 import Button from '../atoms/Button'
 import Anchor from '../atoms/Anchor'
-import img from '../../../assets/img/home1.png'
+import fallback from '../../../assets/img/home1.png'
 
 const Container = styled.section`
     background: ${props => props.theme.colors.layout.white};
@@ -44,23 +44,22 @@ const StyledImg = styled.img`
     margin: 0 auto;
     width: 100%;
 `
-const FooterCTA = ({ children, heading, subheading }) => (
+const FooterCTA = ({ children, heading, subheading, img }) => (
     <Container>
         <MaxWidth>
             <Content>
+                <Text tag="h4" mod="brand">
+                    {subheading || ''}
+                </Text>
                 <Text tag="h3" mod="brand">
                     {heading || ''}
                 </Text>
-                {subheading && (
-                    <Text tag="h4" mod="brand">
-                        {subheading || ''}
-                    </Text>
-                )}
                 {children}
             </Content>
             <StyledImgContainer>
-                <StyledImg src={img} alt="" />
+                <StyledImg src={img || fallback} alt="" />
             </StyledImgContainer>
+
         </MaxWidth>
     </Container>
 )
