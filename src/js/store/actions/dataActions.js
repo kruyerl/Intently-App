@@ -5,6 +5,7 @@ import { CLEAR_LOADING, SET_ERROR, SYNC_DATA } from '../types'
 
 export async function loadUserDataAction(state, { dispatch }) {
     const dbData = await firebase.getUserDoc()
+    console.log('data', dbData)
     const { db, creationTime, displayName, email, lastSignInTime, uid } = dbData
     const { ui, lastState } = state
     const { habits } = db

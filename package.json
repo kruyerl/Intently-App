@@ -1,7 +1,7 @@
 {
-  "name": "basic_react_template",
+  "name": "intently",
   "version": "1.0.0",
-  "description": "A Basic React Template",
+  "description": "An opinionated minimalist approach to goal setting & task management",
   "main": "./src/pug/index.pug",
   "scripts": {
     "serve": "parcel ./src/pug/index.pug",
@@ -13,12 +13,16 @@
     "lint:fix": "eslint . --fix"
   },
   "keywords": [
-    "Pug",
+    "Intently",
+    "GoalSetting",
+    "React",
+    "StyledComponents",
+    "Firebase",
     "Scss",
     "Babel",
     "Eslint"
   ],
-  "author": "",
+  "author": "kruyerl",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.4.3",

@@ -18,9 +18,8 @@ const ObjectivesPage = props => {
         <>
             <SidekickHeader
                 textMain="Main Objectives"
-                textSub="Whether you’re planning out your next career project, your fitness goals, or your new business, we'd love to help you be intentional about it."
+                textSub="Whether you’re wanting to lose a few pounds, stay in touch with old friends or take your career to the next level, we'd love to help you be intentional about achieving your dreams."
             />
-            {/* <QuoteBar /> */}
             <ObjectivesTabs {...props} />
             <ObjectivesContainer {...props} />
             <QuoteBar />

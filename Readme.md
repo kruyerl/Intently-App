@@ -1,6 +1,8 @@
-# StarReview
+# Intently
 
-A Social Media Review App for Stars
+An opinionated minimalist approach to goal setting & task management
+
+[Visit](https://www.npmjs.com)
 
 ## Getting Started
 
@@ -21,9 +23,9 @@ To build for deployment simply run: `npm run prod`
 - [Pug](https://pugjs.org) - Markup Preprocessor
 - [React](https://reactjs.org/) - JS Framework
 - [StyledComponents](https://www.styled-components.com) - CSSinJS Preprocessor
-- [Redux](https://redux.js.org) - State Management
+- [React](https://reactjs.org/) - State Management (useReducer & Context)
 - [Babel](https://babeljs.io) - JS Preprocessor
-- [Stylelint](https://stylelint.io) - JS Preprocessor
+- [Stylelint](https://stylelint.io) - JS Style Preprocessor
 - [Eslint](https://eslint.org) - JS Preprocessor
 
 ## Author/s

@@ -32,16 +32,18 @@ const ReviewsPage = () => {
         <>
             <SidekickHeader
                 textMain="Reviews"
-                textSub="Its easy to be busy. I will prioritise & execute with my objectives in mind"
+                textSub="Where you came from is almost as important as where you are headed. Whether you've have a good day or a bad one. We'd love to help you be intentional about seeing the bigger picture."
             />
 
-             {reviews && <Container>
-                <MaxWidth>
-                    <ReviewContainer>
-                        {reviews && reviews.map(review => <Review key={review.uid} obj={review} />)}
-                    </ReviewContainer>
-                </MaxWidth>
-            </Container> }
+            {reviews && (
+                <Container>
+                    <MaxWidth>
+                        <ReviewContainer>
+                            {reviews && reviews.map(review => <Review key={review.uid} obj={review} />)}
+                        </ReviewContainer>
+                    </MaxWidth>
+                </Container>
+            )}
             <AfterActionReviews />
             <QuoteBar />
         </>

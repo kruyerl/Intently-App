@@ -11,6 +11,7 @@ import AppContext from '../../store/context'
 import { REORDER_TASK } from '../../store/types'
 import QuoteBar from '../modules/QuoteBar'
 import beingbusy from '../../../assets/img/beingbusy.png'
+
 const Container = styled.section`
     background: ${props => props.theme.colors.layout.white};
 `
@@ -58,7 +59,7 @@ const TaskPage = () => {
         <>
             <SidekickHeader
                 textMain="Tasks"
-                textSub="Its easy to be busy. I will prioritise & execute with my objectives in mind"
+                textSub="Whether you’re needing to buy milk, call your mom, or remember to take the dog to the vet, we'd love to help you be intentional about getting it done."
             />
 
             <Container>
@@ -89,7 +90,11 @@ const TaskPage = () => {
                     </DragDropContext>
                 </MaxWidth>
             </Container>
-            <FooterCTA img={beingbusy} heading="Being busy doesn't mean you are being effective." subheading="Consider the cost of each task"/>
+            <FooterCTA
+                img={beingbusy}
+                heading="Being busy doesn't mean you are being effective."
+                subheading="Consider the cost of each task"
+            />
             <QuoteBar />
         </>
     ) : (

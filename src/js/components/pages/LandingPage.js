@@ -87,8 +87,8 @@ const ThreeColumn = styled.section`
     }
 `
 const Title = styled(Text)`
-@media (max-width: ${props => props.theme.screens.desktop}) {
-    text-align: center;
+    @media (max-width: ${props => props.theme.screens.desktop}) {
+        text-align: center;
     }
 `
 const Cta = styled.section`
@@ -112,9 +112,11 @@ const LandingPage = ({ history }) => {
                 <section>
                     <div>
                         <Text tag="h2">Life is precious</Text>
-                        <Text tag="h1">Live yours with intentionality</Text>
+                        <Text tag="h1">Live yours with intention</Text>
                         <Text tag="p">
-                            Life is overwhelming, but it doesn't have to be that way. Intently helps get what you want out of life by distilling the destination into simple consistent steps. So you can accomplish amazing things and enjoy more of life along the way.
+                            Sometimes life feels overwhelming, but it doesn't have to. Intently helps you get what you
+                            want out of life by distilling the destination into simple consistent steps. So you can
+                            accomplish amazing things and enjoy more of life along the way.
                         </Text>
 
                         <CTAButtons mod="interactive" onClick={handleClick} name="login">
@@ -131,7 +133,8 @@ const LandingPage = ({ history }) => {
                         Never feel lost again, <br /> Find purpose in action
                     </Title>
                     <Text tag="p">
-                        Making decisions can be hard. By tieing decisions to your objectives Intently empowers you to take action and move the needle.
+                        Making decisions can be hard. By tying decisions to your objectives Intently empowers you to
+                        take action and move the needle.
                     </Text>
                     <Anchor tag="link" to="/login" mod="interactive">
                         Make things happen
@@ -144,7 +147,8 @@ const LandingPage = ({ history }) => {
                     Focus on what matters to you
                 </Title>
                 <Text tag="p">
-                    In order to help you claim back the moments that matter to you most. Intently helps you limit your attention, focusing on being effective and consistent.
+                    In order to help you claim back the moments that matter to you most. Intently helps you limit your
+                    attention, focusing on being effective and consistent.
                 </Text>
                 <ThreeColumn>
                     <article>
