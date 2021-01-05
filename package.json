@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@firebase/util": "^0.2.15",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "firebase": "^6.0.2",
     "history": "^4.9.0",
